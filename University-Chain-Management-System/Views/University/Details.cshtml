@@ -1,0 +1,41 @@
+﻿@model University
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Universities";
+}
+
+<div class="container">
+
+    <h1 class="my-4">@Model.Name</h1>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <h3 class="my-3">Informations:</h3>
+
+            <ul>
+                <li>ID: @Model.Id</li>
+                <li>City: @Model.City</li>
+                <li>Employees count: @Model.Employees.Count</li>
+                <li>Majors count: @Model.Majors.Count</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <h3 class="my-4">Employees</h3>
+
+    <div class="row">
+
+        @foreach (Employee employee in Model.Employees)
+        {
+            <div class="col-md-3 col-sm-6 mb-4">
+                    <img class="img-fluid" src="@employee.Image" alt="Employee">
+                    <p>@employee.FirstName @employee.LastName</p>
+            </div>
+        }
+
+    </div>
+</div>

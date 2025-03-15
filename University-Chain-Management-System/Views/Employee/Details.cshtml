@@ -1,0 +1,42 @@
+﻿@model Employee
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<div class="container">
+
+    <h1 class="my-4">@Model.FirstName @Model.LastName</h1>
+
+    <div class="row">
+
+        <div class="col-md-8">
+            <img class="img-fluid" src="@Model.Image" alt="Employee">
+        </div>
+
+        <div class="col-md-4">
+            <h3 class="my-3">Informations:</h3>
+
+            <ul>
+                <li>ID: @Model.Id</li>
+                <li>University: @Model.University.Name</li>
+                <li>Subjects count: @Model.Subjects.Count</li>
+                <li>Hire date: @Model.HireDate</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <h3 class="my-4">Lecturer of subjects:</h3>
+
+    <div class="row">
+
+        @foreach (Subject subject in Model.Subjects)
+        {
+            <p>@subject.Name</p>
+        }
+
+    </div>
+</div>
