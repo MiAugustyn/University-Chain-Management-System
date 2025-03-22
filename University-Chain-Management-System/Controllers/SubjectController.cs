@@ -1,30 +1,73 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Models;
+using University_Chain_Management_System.Models.ViewModels;
+using University_Chain_Management_System.Repositories;
 
 namespace University_Chain_Management_System.Controllers
 {
     public class SubjectController : Controller
     {
-        private readonly DataContext _context;
+        private readonly ISubjectRepository _subjectRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IMajorRepository _majorRepository;
 
-        public SubjectController(DataContext context)
+        public SubjectController(ISubjectRepository subjectRepository, 
+            IEmployeeRepository employeeRepository, IMajorRepository majorRepository)
         {
-            _context = context;
+            _subjectRepository = subjectRepository;
+            _employeeRepository = employeeRepository;
+            _majorRepository = majorRepository;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            List<Subject> subjects = _context.Subjects.ToList();
+            IEnumerable<Subject> subjects = await _subjectRepository.GetAll();
+
             return View(subjects);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            Subject subject = _context.Subjects.Include(s => s.Employee).Include(s => s.Major)
-                .FirstOrDefault(s => s.Id == id);
-
+            Subject subject = await _subjectRepository.GetById(id);
             return View(subject);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            IEnumerable<Employee> employees = await _employeeRepository.GetAll();
+            IEnumerable<Major> majors = await _majorRepository.GetAll();
+
+            SubjectViewModel viewModel = new SubjectViewModel()
+            {
+                Subject = new Subject(),
+                Majors = majors,
+                Employees = employees
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Subject subject)
+        {
+
+            IEnumerable<Employee> employees = await _employeeRepository.GetAll();
+            IEnumerable<Major> majors = await _majorRepository.GetAll();
+
+            SubjectViewModel viewModel = new SubjectViewModel()
+            {
+                Subject = subject,
+                Majors = majors,
+                Employees = employees
+            };
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            _subjectRepository.Add(subject);
+            return RedirectToAction("Index");
         }
     }
 }

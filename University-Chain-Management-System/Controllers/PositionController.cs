@@ -1,30 +1,47 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Models;
+using University_Chain_Management_System.Repositories;
 
 namespace University_Chain_Management_System.Controllers
 {
     public class PositionController : Controller
     {
-        private readonly DataContext _context;
+        private readonly IPositionRepository _positionRepository;
 
-        public PositionController(DataContext context)
+        public PositionController(IPositionRepository positionRepository)
         {
-            _context = context;
+            _positionRepository = positionRepository;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            List<Position> positions = _context.Positions.ToList();
+            IEnumerable<Position> positions = await _positionRepository.GetAll();
+
             return View(positions);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            Position position = _context.Positions.Include(p => p.Employees)
-                .FirstOrDefault(p => p.Id == id);
-
+            Position position = await _positionRepository.GetById(id);
             return View(position);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Position position)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(position);
+            }
+
+            _positionRepository.Add(position);
+            return RedirectToAction("Index");
         }
     }
 }

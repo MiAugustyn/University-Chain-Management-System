@@ -1,30 +1,66 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Models;
+using University_Chain_Management_System.Models.ViewModels;
+using University_Chain_Management_System.Repositories;
 
 namespace University_Chain_Management_System.Controllers
 {
     public class MajorController : Controller
     {
-        private readonly DataContext _context;
+        private readonly IMajorRepository _majorRepository;
+        private readonly IUniversityRepository _universityRepository;
 
-        public MajorController(DataContext context)
+        public MajorController(IMajorRepository majorRepository,
+            IUniversityRepository universityRepository)
         {
-            _context = context;
+            _majorRepository = majorRepository;
+            _universityRepository = universityRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Major> majors = _context.Majors.ToList();
+            IEnumerable<Major> majors = await _majorRepository.GetAll();
+
             return View(majors);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            Major major = _context.Majors.Include(m => m.Students).Include(m => m.University).Include(m => m.Subjects)
-                .FirstOrDefault(m => m.Id == id);
+            Major major = await _majorRepository.GetById(id);
 
             return View(major);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            IEnumerable<University> universities = await _universityRepository.GetAll();
+
+            MajorViewModel viewModel = new MajorViewModel()
+            {
+                Major = new Major(),
+                Universities = universities
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Major major)
+        {
+            IEnumerable<University> universities = await _universityRepository.GetAll();
+
+            MajorViewModel viewModel = new MajorViewModel()
+            {
+                Major = major,
+                Universities = universities
+            };
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            _majorRepository.Add(major);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -15,6 +15,6 @@ namespace University_Chain_Management_System.Models
         [ForeignKey("Employee")]
         public int? EmployeeId { get; set; }
         public Employee? Employee { get; set; }
-        public ICollection<Grade> Grades { get; set; }
+        public ICollection<Grade>? Grades { get; set; }
     }
 }

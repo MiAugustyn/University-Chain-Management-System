@@ -1,11 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using University_Chain_Management_System.Data;
+using University_Chain_Management_System.Repositories;
+using University_Chain_Management_System.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<Seed>();
+
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IGradeRepository, GradeRepository>();
+builder.Services.AddScoped<IMajorRepository, MajorRepository>();
+builder.Services.AddScoped <IPositionRepository, PositionRepository>();
+builder.Services.AddScoped <IStudentRepository, StudentRepository>();
+builder.Services.AddScoped <ISubjectRepository, SubjectRepository>();
+builder.Services.AddScoped <IUniversityRepository, UniversityRepository>();
+
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

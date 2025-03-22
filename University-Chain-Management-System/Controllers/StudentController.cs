@@ -1,30 +1,47 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Models;
+using University_Chain_Management_System.Repositories;
 
 namespace University_Chain_Management_System.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly DataContext _context;
+        private readonly IStudentRepository _studentRepository;
 
-        public StudentController(DataContext context)
+        public StudentController(IStudentRepository studentRepository)
         {
-            _context = context;
+            _studentRepository = studentRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Student> students = _context.Students.ToList();
+            IEnumerable<Student> students = await _studentRepository.GetAll();
+
             return View(students);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            Student student = _context.Students.Include(s => s.Majors).Include(s => s.Grades)
-                .FirstOrDefault(s => s.Id == id);
+            Student student = await _studentRepository.GetById(id);
 
             return View(student);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Student student)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            _studentRepository.Add(student);
+            return RedirectToAction("Index");
         }
     }
 }

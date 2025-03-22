@@ -1,30 +1,73 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Models;
+using University_Chain_Management_System.Models.ViewModels;
+using University_Chain_Management_System.Repositories;
 
 namespace University_Chain_Management_System.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly DataContext _context;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IUniversityRepository _universityRepository;
+        private readonly IPositionRepository _positionRepository;
 
-        public EmployeeController(DataContext context)
+        public EmployeeController(IEmployeeRepository employeeRepository, 
+            IUniversityRepository universityRepository, IPositionRepository positionRepository)
         {
-            _context = context;
+            _employeeRepository = employeeRepository;
+            _universityRepository = universityRepository;
+            _positionRepository = positionRepository;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            List<Employee> employees = _context.Employees.ToList();
+            IEnumerable<Employee> employees = await _employeeRepository.GetAll();
+
             return View(employees);
         }
         
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            Employee employee = _context.Employees.Include(e => e.University).Include(u => u.Subjects)
-                .FirstOrDefault(s => s.Id == id);
+            Employee employee = await _employeeRepository.GetById(id);
 
             return View(employee);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            IEnumerable<University> universities = await _universityRepository.GetAll();
+            IEnumerable<Position> positions = await _positionRepository.GetAll();
+
+            EmployeeViewModel viewModel = new EmployeeViewModel()
+            {
+                Employee = new Employee(),
+                Universities = universities,
+                Positions = positions
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Employee employee)
+        {
+            IEnumerable<University> universities = await _universityRepository.GetAll();
+            IEnumerable<Position> positions = await _positionRepository.GetAll();
+
+            EmployeeViewModel viewModel = new EmployeeViewModel()
+            {
+                Employee = employee,
+                Universities = universities,
+                Positions = positions
+            };
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            _employeeRepository.Add(employee);
+            return RedirectToAction("Index");
         }
     }
 }

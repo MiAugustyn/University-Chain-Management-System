@@ -12,6 +12,8 @@ namespace University_Chain_Management_System.Models
         public string? Image { get; set; }
         [DataType(DataType.Date)]
         public DateTime HireDate { get; set; }
+        [ForeignKey("Position")]
+        public int? PositionId { get; set; }
         public Position? Position { get; set; }
         [ForeignKey("University")]
         public int? UniversityId { get; set; }
