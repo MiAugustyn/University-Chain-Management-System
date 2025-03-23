@@ -2,6 +2,7 @@
 using University_Chain_Management_System.Models;
 using University_Chain_Management_System.Models.ViewModels;
 using University_Chain_Management_System.Repositories;
+using University_Chain_Management_System.Repository;
 
 namespace University_Chain_Management_System.Controllers
 {
@@ -67,6 +68,49 @@ namespace University_Chain_Management_System.Controllers
             }
 
             _gradeRepository.Add(grade);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Grade grade = await _gradeRepository.GetById(id);
+
+            if (grade == null) { return View("Error"); }
+
+            IEnumerable<Student> students = await _studentRepository.GetAll();
+            IEnumerable<Subject> subjects = await _subjectRepository.GetAll();
+
+            GradeViewModel viewModel = new GradeViewModel()
+            {
+                Grade = grade,
+                Students = students,
+                Subjects = subjects
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Grade grade)
+        {
+            IEnumerable<Student> students = await _studentRepository.GetAll();
+            IEnumerable<Subject> subjects = await _subjectRepository.GetAll();
+
+            GradeViewModel viewModel = new GradeViewModel()
+            {
+                Grade = grade,
+                Students = students,
+                Subjects = subjects
+            };
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit");
+                return View("Edit", viewModel);
+            }
+
+            _gradeRepository.Update(grade);
+
             return RedirectToAction("Index");
         }
     }

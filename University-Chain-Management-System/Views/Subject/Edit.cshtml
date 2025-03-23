@@ -1,0 +1,44 @@
+﻿@model University_Chain_Management_System.Models.ViewModels.SubjectViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form method="post" asp-action="Edit">
+
+    <input type="hidden" asp-for="Subject.Id" />
+
+    <div class="form-group">
+        <label asp-for="Subject.Name"></label>
+        <input asp-for="Subject.Name" class="form-control" placeholder="Name">
+        <span asp-validation-for="Subject.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Subject.Description"></label>
+        <input asp-for="Subject.Description" class="form-control" placeholder="Description">
+        <span asp-validation-for="Subject.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Subject.MajorId">Major</label>
+        <select asp-for="Subject.MajorId"
+                asp-items="@(new SelectList(Model.Majors, "Id", "Name"))"
+                class="form-control">
+        </select>
+        <span asp-validation-for="Subject.MajorId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Subject.EmployeeId">Employee</label>
+        <select asp-for="Subject.EmployeeId"
+                asp-items="@(new SelectList(Model.Employees, "Id", "FirstName"))"
+                class="form-control">
+        </select>
+        <span asp-validation-for="Subject.EmployeeId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>

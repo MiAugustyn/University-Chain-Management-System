@@ -42,5 +42,28 @@ namespace University_Chain_Management_System.Controllers
             _universityRepository.Add(university);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            University university = await _universityRepository.GetById(id);
+
+            if (university == null) { return View("Error"); }
+
+            return View(university);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(University university)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit");
+                return View("Edit", university);
+            }
+
+            _universityRepository.Update(university);
+            return RedirectToAction("Index");
+        }
     }
 }

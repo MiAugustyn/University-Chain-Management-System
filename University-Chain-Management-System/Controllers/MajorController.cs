@@ -62,5 +62,43 @@ namespace University_Chain_Management_System.Controllers
             _majorRepository.Add(major);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Major major = await _majorRepository.GetById(id);
+
+            if (major == null) { return View("Error"); }
+
+            IEnumerable<University> universities = await _universityRepository.GetAll();
+
+            MajorViewModel viewModel = new MajorViewModel()
+            {
+                Major = major,
+                Universities = universities
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Major major)
+        {
+            IEnumerable<University> universities = await _universityRepository.GetAll();
+
+            MajorViewModel viewModel = new MajorViewModel()
+            {
+                Major = major,
+                Universities = universities
+            };
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit");
+                return View("Edit", viewModel);
+            }
+
+            _majorRepository.Update(major);
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -69,5 +69,48 @@ namespace University_Chain_Management_System.Controllers
             _employeeRepository.Add(employee);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Employee employee = await _employeeRepository.GetById(id);
+
+            if (employee == null) { return View("Error"); }
+
+            IEnumerable<University> universities = await _universityRepository.GetAll();
+            IEnumerable<Position> positions = await _positionRepository.GetAll();
+
+            EmployeeViewModel viewModel = new EmployeeViewModel()
+            {
+                Employee = employee,
+                Universities = universities,
+                Positions = positions
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Employee employee)
+        {
+            IEnumerable<University> universities = await _universityRepository.GetAll();
+            IEnumerable<Position> positions = await _positionRepository.GetAll();
+
+            EmployeeViewModel viewModel = new EmployeeViewModel()
+            {
+                Employee = employee,
+                Universities = universities,
+                Positions = positions
+            };
+
+            if (!ModelState.IsValid) 
+            {
+                ModelState.AddModelError("", "Failed to edit");
+                return View("Edit", viewModel);
+            }
+
+            _employeeRepository.Update(employee);
+
+            return RedirectToAction("Index");
+        }
     }
 }

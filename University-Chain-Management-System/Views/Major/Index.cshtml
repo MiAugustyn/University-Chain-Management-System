@@ -20,7 +20,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a asp-controller="Major" asp-action="Details" asp-route-id="@major.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                                    <a type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a asp-controller="Major" asp-action="Edit" asp-route-id="@major.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
                                 </div>
                                 <small class="text-muted">@major.Id</small>
                             </div>

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using University_Chain_Management_System.Data.Enums;
 
 namespace University_Chain_Management_System.Models.JoinTables

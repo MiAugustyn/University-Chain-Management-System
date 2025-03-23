@@ -43,5 +43,29 @@ namespace University_Chain_Management_System.Controllers
             _studentRepository.Add(student);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Student student = await _studentRepository.GetById(id);
+
+            if (student == null) { return View("Error");  }
+
+            return View(student);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Student student)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit");
+                return View("Edit", student);
+            }
+
+            _studentRepository.Update(student);
+
+            return RedirectToAction("Index");
+        }
     }
 }
