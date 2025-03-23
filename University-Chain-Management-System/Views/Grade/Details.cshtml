@@ -16,8 +16,8 @@
 
             <ul>
                 <li>ID: @Model.Id</li>
-                <li>Student: @Model.Student.FirstName @Model.Student.LastName</li>
-                <li>Subject: @Model.Subject.Name</li>
+                <li>Student: @Model.Student?.FirstName @Model.Student?.LastName</li>
+                <li>Subject: @Model.Subject?.Name</li>
             </ul>
         </div>
 

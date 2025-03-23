@@ -18,8 +18,8 @@
             <ul>
                 <li>ID: @Model.Id</li>
                 <li>City: @Model.City</li>
-                <li>Employees count: @Model.Employees.Count</li>
-                <li>Majors count: @Model.Majors.Count</li>
+                <li>Employees count: @Model.Employees?.Count</li>
+                <li>Majors count: @Model.Majors?.Count</li>
             </ul>
         </div>
 
@@ -29,7 +29,7 @@
 
     <div class="row">
 
-        @foreach (Employee employee in Model.Employees)
+        @foreach (Employee employee in Model.Employees ?? Enumerable.Empty<Employee>())
         {
             <div class="col-md-3 col-sm-6 mb-4">
                     <img class="img-fluid" src="@employee.Image" alt="Employee">

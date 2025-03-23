@@ -109,7 +109,36 @@ namespace University_Chain_Management_System.Controllers
             }
 
             _employeeRepository.Update(employee);
+            return RedirectToAction("Index");
+        }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            Employee employee = await _employeeRepository.GetById(id);
+
+            if (employee == null) { return View("Error"); }
+
+            IEnumerable<University> universities = await _universityRepository.GetAll();
+            IEnumerable<Position> positions = await _positionRepository.GetAll();
+
+            EmployeeViewModel viewModel = new EmployeeViewModel()
+            {
+                Employee = employee,
+                Universities = universities,
+                Positions = positions
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteEmployee(int id)
+        {
+            Employee employee = await _employeeRepository.GetById(id);
+
+            if (employee == null) { return View("Error"); }
+
+            _employeeRepository.Delete(employee);
             return RedirectToAction("Index");
         }
     }

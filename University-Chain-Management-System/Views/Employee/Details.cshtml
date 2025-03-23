@@ -21,8 +21,8 @@
 
             <ul>
                 <li>ID: @Model.Id</li>
-                <li>University: @Model.University.Name</li>
-                <li>Subjects count: @Model.Subjects.Count</li>
+                <li>University: @Model.University?.Name</li>
+                <li>Subjects count: @Model.Subjects?.Count</li>
                 <li>Hire date: @Model.HireDate.ToShortDateString()</li>
             </ul>
         </div>
@@ -33,7 +33,7 @@
 
     <div class="row">
 
-        @foreach (Subject subject in Model.Subjects)
+        @foreach (Subject subject in Model.Subjects ?? Enumerable.Empty<Subject>())
         {
             <p>@subject.Name</p>
         }

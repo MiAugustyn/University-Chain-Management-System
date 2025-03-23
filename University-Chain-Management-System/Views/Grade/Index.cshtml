@@ -16,12 +16,13 @@
                     <div class="card mb-4 box-shadow">
                         <div class="card-body">
                             <p class="card-text">@grade.Value</p>
-                            <p class="card-text">@grade.Student.FirstName @grade.Student.LastName</p>
-                            <p class="card-text">@grade.Subject.Name</p>
+                            <p class="card-text">@grade.Student?.FirstName @grade.Student?.LastName</p>
+                            <p class="card-text">@grade.Subject?.Name</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a asp-controller="Grade" asp-action="Details" asp-route-id="@grade.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
                                     <a asp-controller="Grade" asp-action="Edit" asp-route-id="@grade.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a asp-controller="Grade" asp-action="Delete" asp-route-id="@grade.Id" type="button" class="btn btn-sm btn-outline-secondary">Delete</a>
                                 </div>
                                 <small class="text-muted">@grade.Id</small>
                             </div>

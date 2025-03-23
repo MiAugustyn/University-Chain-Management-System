@@ -110,7 +110,36 @@ namespace University_Chain_Management_System.Controllers
             }
 
             _gradeRepository.Update(grade);
+            return RedirectToAction("Index");
+        }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            Grade grade = await _gradeRepository.GetById(id);
+
+            if (grade == null) { return View("Error"); }
+
+            IEnumerable<Student> students = await _studentRepository.GetAll();
+            IEnumerable<Subject> subjects = await _subjectRepository.GetAll();
+
+            GradeViewModel viewModel = new GradeViewModel()
+            {
+                Grade = grade,
+                Students = students,
+                Subjects = subjects
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteGrade(int id)
+        {
+            Grade grade = await _gradeRepository.GetById(id);
+
+            if (grade == null) { return View("Error"); }
+
+            _gradeRepository.Delete(grade);
             return RedirectToAction("Index");
         }
     }

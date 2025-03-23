@@ -110,7 +110,36 @@ namespace University_Chain_Management_System.Controllers
             }
 
             _subjectRepository.Update(subject);
+            return RedirectToAction("Index");
+        }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            Subject subject = await _subjectRepository.GetById(id);
+
+            if (subject == null) { return View("Error"); }
+
+            IEnumerable<Employee> employees = await _employeeRepository.GetAll();
+            IEnumerable<Major> majors = await _majorRepository.GetAll();
+
+            SubjectViewModel viewModel = new SubjectViewModel()
+            {
+                Subject = subject,
+                Majors = majors,
+                Employees = employees
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteSubject(int id)
+        {
+            Subject subject = await _subjectRepository.GetById(id);
+
+            if (subject == null) { return View("Error"); }
+
+            _subjectRepository.Delete(subject);
             return RedirectToAction("Index");
         }
     }

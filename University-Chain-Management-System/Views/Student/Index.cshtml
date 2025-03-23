@@ -21,6 +21,7 @@
                                 <div class="btn-group">
                                     <a asp-controller="Student" asp-action="Details" asp-route-id="@student.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
                                     <a asp-controller="Student" asp-action="Edit" asp-route-id="@student.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a asp-controller="Student" asp-action="Delete" asp-route-id="@student.Id" type="button" class="btn btn-sm btn-outline-secondary">Delete</a>
                                 </div>
                                 <small class="text-muted">@student.Id</small>
                             </div>

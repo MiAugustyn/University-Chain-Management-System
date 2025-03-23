@@ -17,8 +17,8 @@
 
             <ul>
                 <li>ID: @Model.Id</li>
-                <li>Lecturer: @Model.Employee.FirstName @Model.Employee.LastName</li>
-                <li>Major: @Model.Major.Name</li>
+                <li>Lecturer: @Model.Employee?.FirstName @Model.Employee?.LastName</li>
+                <li>Major: @Model.Major?.Name</li>
             </ul>
         </div>
 

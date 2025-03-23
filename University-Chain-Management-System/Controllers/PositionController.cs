@@ -66,5 +66,25 @@ namespace University_Chain_Management_System.Controllers
             _positionRepository.Update(position);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            Position position = await _positionRepository.GetById(id);
+
+            if (position == null) { return View("Error"); }
+
+            return View(position);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeletePosition(int id)
+        {
+            Position position = await _positionRepository.GetById(id);
+
+            if (position == null) { return View("Error"); }
+
+            _positionRepository.Delete(position);
+            return RedirectToAction("Index");
+        }
     }
 }
