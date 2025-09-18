@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Models;
-using University_Chain_Management_System.Models.ViewModels;
-using University_Chain_Management_System.Repositories;
 
-namespace University_Chain_Management_System.Repository
+namespace University_Chain_Management_System.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {
@@ -12,7 +10,6 @@ namespace University_Chain_Management_System.Repository
 
         public EmployeeRepository(DataContext context)
         {
-            
             _context = context;
         }
 

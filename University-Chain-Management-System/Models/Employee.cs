@@ -9,6 +9,7 @@ namespace University_Chain_Management_System.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullName => $"{FirstName} {LastName}";
         public string? Image { get; set; }
         [DataType(DataType.Date)]
         public DateTime HireDate { get; set; }

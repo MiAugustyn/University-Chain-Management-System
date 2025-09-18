@@ -1,0 +1,29 @@
+﻿@model StudentMajor
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Student's Majors";
+}
+
+<div class="container">
+
+    <h1 class="my-4">Student: @Model.Student?.FullName</h1>
+    <h1 class="my-4">Major: @Model.Major?.Name</h1>
+    <h1 class="my-4">ID: @Model.Id</h1>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <h3 class="my-3">Informations:</h3>
+
+            <ul>
+                <li>Enrollment Date: @Model.EnrollmentDate</li>
+                <li>Graduation Date: @Model.GraduationDate</li>
+                <li>Student Status: @Model.StudentStatus</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+

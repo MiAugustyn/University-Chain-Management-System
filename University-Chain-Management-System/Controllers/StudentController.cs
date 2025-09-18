@@ -56,7 +56,6 @@ namespace University_Chain_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Student student)
         {
-
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Failed to edit");

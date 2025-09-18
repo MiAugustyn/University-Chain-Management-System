@@ -16,19 +16,5 @@ namespace University_Chain_Management_System.Data
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<University> Universities { get; set; }
         public DbSet<StudentMajor> StudentsMajors { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<StudentMajor>()
-                .HasKey(sm => new { sm.StudentId, sm.MajorId });
-            modelBuilder.Entity<StudentMajor>()
-                .HasOne(s => s.Student)
-                .WithMany(sm => sm.Majors)
-                .HasForeignKey(s => s.StudentId);
-            modelBuilder.Entity<StudentMajor>()
-                .HasOne(m => m.Major)
-                .WithMany(sm => sm.Students)
-                .HasForeignKey(m => m.MajorId);
-        }
     }
 }

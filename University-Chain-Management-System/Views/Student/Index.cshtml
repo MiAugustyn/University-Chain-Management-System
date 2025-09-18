@@ -16,7 +16,7 @@
                     <div class="card mb-4 box-shadow">
                         <img class="card-img-top" src="@student.Image" width="100%" height="250" alt="Card image cap">
                         <div class="card-body">
-                            <p class="card-text">@student.FirstName @student.LastName</p>
+                            <p class="card-text">@student.FullName</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a asp-controller="Student" asp-action="Details" asp-route-id="@student.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>

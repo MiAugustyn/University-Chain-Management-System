@@ -1,5 +1,4 @@
 ﻿using University_Chain_Management_System.Models;
-using University_Chain_Management_System.Models.ViewModels;
 
 namespace University_Chain_Management_System.Repositories
 {

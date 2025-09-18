@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Models;
-using University_Chain_Management_System.Repositories;
 
-namespace University_Chain_Management_System.Repository
+namespace University_Chain_Management_System.Repositories
 {
     public class UniversityRepository : IUniversityRepository
     {
@@ -11,7 +10,6 @@ namespace University_Chain_Management_System.Repository
 
         public UniversityRepository(DataContext context)
         {
-
             _context = context;
         }
 
@@ -43,11 +41,6 @@ namespace University_Chain_Management_System.Repository
         {
             var save = _context.SaveChanges();
             return save > 0 ? true : false;
-        }
-
-        public bool Update(Employee employee)
-        {
-            throw new NotImplementedException();
         }
 
         public bool Update(University university)

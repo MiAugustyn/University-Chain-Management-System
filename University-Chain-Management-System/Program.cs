@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Repositories;
 using University_Chain_Management_System.Repository;
+using University_Chain_Management_System.Repository.JoinTables;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddScoped <IPositionRepository, PositionRepository>();
 builder.Services.AddScoped <IStudentRepository, StudentRepository>();
 builder.Services.AddScoped <ISubjectRepository, SubjectRepository>();
 builder.Services.AddScoped <IUniversityRepository, UniversityRepository>();
+builder.Services.AddScoped<IStudentMajorRepository, StudentMajorRepository>();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {

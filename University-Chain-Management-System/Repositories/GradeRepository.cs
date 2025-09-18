@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Models;
-using University_Chain_Management_System.Repositories;
 
-namespace University_Chain_Management_System.Repository
+namespace University_Chain_Management_System.Repositories
 {
     public class GradeRepository : IGradeRepository
     {
@@ -11,7 +10,6 @@ namespace University_Chain_Management_System.Repository
 
         public GradeRepository(DataContext context)
         {
-
             _context = context;
         }
 
