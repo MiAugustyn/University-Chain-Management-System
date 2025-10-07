@@ -10,13 +10,20 @@ namespace University_Chain_Management_System.Controllers
         private readonly ISubjectRepository _subjectRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMajorRepository _majorRepository;
+        private readonly IStudentRepository _studentRepository;
+        private readonly IStudentMajorRepository _studentMajorRepository;
 
-        public SubjectController(ISubjectRepository subjectRepository, 
-            IEmployeeRepository employeeRepository, IMajorRepository majorRepository)
+       public SubjectController(ISubjectRepository subjectRepository, 
+            IEmployeeRepository employeeRepository, 
+            IMajorRepository majorRepository,
+            IStudentRepository studentRepository,
+            IStudentMajorRepository studentMajorRepository)
         {
             _subjectRepository = subjectRepository;
             _employeeRepository = employeeRepository;
             _majorRepository = majorRepository;
+            _studentRepository = studentRepository;
+            _studentMajorRepository = studentMajorRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -63,6 +70,7 @@ namespace University_Chain_Management_System.Controllers
 
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError("", "Fill all fields with valid data.");
                 return View(viewModel);
             }
 
@@ -105,8 +113,8 @@ namespace University_Chain_Management_System.Controllers
 
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Failed to edit");
-                return View("Edit", viewModel);
+                ModelState.AddModelError("", "Fill all fields with valid data.");
+                return View(viewModel);
             }
 
             _subjectRepository.Update(subject);
@@ -141,6 +149,26 @@ namespace University_Chain_Management_System.Controllers
 
             _subjectRepository.Delete(subject);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        // Get students enrolled in a major containing subject.
+        // Use currentStudentId to display current student as first option (for edit views)
+        public async Task<IActionResult> GetAvailableStudents(int subjectId, int? currentStudentId = null)
+        {
+            var subject = await _subjectRepository.GetById(subjectId);
+
+            if (subject?.Major == null){ return Json(new List<object>()); }
+
+            var enrolledStudents = (await _studentMajorRepository.GetByMajorId(subject.MajorId.Value))
+                .Select(sm => new { Id = sm.Student.Id, FullName = sm.Student.FullName }).ToList();
+
+            if (currentStudentId == null) { return Json(enrolledStudents); }
+
+            var currentStudent = await _studentRepository.GetById(currentStudentId.Value);
+            if (currentStudent != null) { enrolledStudents.Insert(1, new { Id = currentStudent.Id, FullName = currentStudent.FullName }); }
+
+            return Json(enrolledStudents);
         }
     }
 }

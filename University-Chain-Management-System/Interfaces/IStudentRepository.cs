@@ -1,4 +1,5 @@
 ﻿using University_Chain_Management_System.Models;
+using University_Chain_Management_System.Models.ViewModels;
 
 namespace University_Chain_Management_System.Repositories
 {
@@ -6,6 +7,7 @@ namespace University_Chain_Management_System.Repositories
     {
         Task<IEnumerable<Student>> GetAll();
         Task<Student> GetById(int id);
+        Task<StudentViewModel> GetViewModelById(int id);
         bool Add(Student student);
         bool Update(Student student);
         bool Delete(Student student);

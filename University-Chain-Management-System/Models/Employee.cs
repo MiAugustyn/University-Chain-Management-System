@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using University_Chain_Management_System.ModelsValidations;
 
 namespace University_Chain_Management_System.Models
 {
@@ -7,11 +8,16 @@ namespace University_Chain_Management_System.Models
     {
         [Key]
         public int Id { get; set; }
+        [NameValidation]
         public string FirstName { get; set; }
+        [NameValidation]
         public string LastName { get; set; }
         public string FullName => $"{FirstName} {LastName}";
+        [EmailValidation]
+        public string Email { get; set; }
         public string? Image { get; set; }
         [DataType(DataType.Date)]
+        [DateValidation]
         public DateTime HireDate { get; set; }
         [ForeignKey("Position")]
         public int? PositionId { get; set; }

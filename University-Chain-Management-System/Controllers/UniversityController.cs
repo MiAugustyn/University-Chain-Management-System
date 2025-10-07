@@ -36,6 +36,7 @@ namespace University_Chain_Management_System.Controllers
 
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError("", "Fill all fields with valid data.");
                 return View(university);
             }
 
@@ -58,8 +59,8 @@ namespace University_Chain_Management_System.Controllers
 
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Failed to edit");
-                return View("Edit", university);
+                ModelState.AddModelError("", "Fill all fields with valid data.");
+                return View(university);
             }
 
             _universityRepository.Update(university);

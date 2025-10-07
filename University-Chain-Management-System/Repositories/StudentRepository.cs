@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Models;
+using University_Chain_Management_System.Models.ViewModels;
 
 namespace University_Chain_Management_System.Repositories
 {
@@ -37,7 +38,35 @@ namespace University_Chain_Management_System.Repositories
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public bool Save()
+        // Gets student with all their majors, subjects linked to those majors, and grades
+        public async Task<StudentViewModel> GetViewModelById(int id)
+        {
+            var student = await _context.Students
+                .Include(s => s.Majors)
+                    .ThenInclude(sm => sm.Major)
+                .Include(s => s.Grades)
+                    .ThenInclude(g => g.Subject)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            var majors = student.Majors?.Select(sm => sm.Major).ToList();
+            var majorIds = majors.Select(m => m.Id).ToList();
+
+            var subjects = await _context.Subjects
+                .Where(s => s.MajorId.HasValue && majorIds.Contains(s.MajorId.Value))
+                .ToListAsync();
+
+            var grades = student.Grades?.ToList();
+
+            return new StudentViewModel()
+            {
+                Student = student,
+                Majors = majors,
+                Subjects = subjects,
+                Grades = grades
+            };
+        }
+
+          public bool Save()
         {
             var save = _context.SaveChanges();
             return save > 0 ? true : false;

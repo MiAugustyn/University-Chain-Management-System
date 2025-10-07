@@ -12,25 +12,31 @@
 
     <div class="form-group">
         <label asp-for="Employee.FirstName"></label>
-        <input asp-for="Employee.FirstName" class="form-control" placeholder="FirstName">
+        <input asp-for="Employee.FirstName" class="form-control" placeholder="First Name" readonly>
         <span asp-validation-for="Employee.FirstName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Employee.LastName"></label>
-        <input asp-for="Employee.LastName" class="form-control" placeholder="LastName">
+        <input asp-for="Employee.LastName" class="form-control" placeholder="Last Name" readonly>
         <span asp-validation-for="Employee.LastName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
+        <label asp-for="Employee.Email"></label>
+        <input asp-for="Employee.Email" class="form-control" placeholder="Email Address" readonly>
+        <span asp-validation-for="Employee.Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
         <label asp-for="Employee.Image">ImageUrl</label>
-        <input asp-for="Employee.Image" class="form-control" placeholder="ImageUrl">
+        <input asp-for="Employee.Image" class="form-control" placeholder="Image Url" readonly>
         <span asp-validation-for="Employee.Image" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Employee.HireDate"></label>
-        <input asp-for="Employee.HireDate" id="datepicker" class="form-control" type="text" placeholder="Hire Date">
+        <input asp-for="Employee.HireDate" id="datepicker" class="form-control" type="text" placeholder="Hire Date" readonly>
         <span asp-validation-for="Employee.HireDate" class="text-danger"></span>
     </div>
 
@@ -38,7 +44,7 @@
         <label asp-for="Employee.PositionId">Position</label>
         <select asp-for="Employee.PositionId"
                 asp-items="@(new SelectList(Model.Positions, "Id", "Name"))"
-                class="form-control">
+                class="form-control" readonly>
         </select>
         <span asp-validation-for="Employee.PositionId" class="text-danger"></span>
     </div>
@@ -47,13 +53,13 @@
         <label asp-for="Employee.UniversityId">University</label>
         <select asp-for="Employee.UniversityId"
                 asp-items="@(new SelectList(Model.Universities, "Id", "Name"))"
-                class="form-control">
+                class="form-control" readonly>
         </select>
         <span asp-validation-for="Employee.UniversityId" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
-
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 </form>
 
 @section Scripts

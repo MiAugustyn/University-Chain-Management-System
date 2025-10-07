@@ -7,36 +7,103 @@
 }
 
 <div class="container">
-
-    <h1 class="my-4">@Model.FullName</h1>
-
-    <div class="row">
-
-        <div class="col-md-8">
-            <img class="img-fluid" src="@Model.Image" alt="Employee">
+    <div class="row my-4 g-3 align-items-stretch">
+        <div class="col-lg-4 col-md-5">
+            <div class="card h-100 d-flex flex-column">
+                <img class="card-img-top img-fluid rounded" src="@(string.IsNullOrWhiteSpace(Model.Image) ? Constants.DefaultUserImage : Model.Image)"
+                     onerror="this.src='@Constants.DefaultUserImage';"
+                     alt="@(!string.IsNullOrWhiteSpace(Model?.FullName) ? Model.FullName + " photo" : "Employee photo")">
+                <div class="card-body text-center">
+                    <h2 class="h5 mb-1">@Model.FullName</h2>
+                    <p class="text-muted mb-0">ID <strong class="ms-1">@Model.Id</strong></p>
+                </div>
+            </div>
         </div>
 
-        <div class="col-md-4">
-            <h3 class="my-3">Informations:</h3>
+        <div class="col-lg-8 col-md-7">
+            <div class="card h-100 d-flex flex-column">
+                <div class="card-header">
+                    <h3 class="h6 mb-0">Information</h3>
+                </div>
 
-            <ul>
-                <li>ID: @Model.Id</li>
-                <li>University: @Model.University?.Name</li>
-                <li>Subjects count: @Model.Subjects?.Count</li>
-                <li>Hire date: @Model.HireDate.ToShortDateString()</li>
-            </ul>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4"><strong>Email</strong></dt>
+                        <dd class="col-sm-8">
+                            @if (string.IsNullOrWhiteSpace(Model?.Email))
+                            {
+                                <span class="text-muted">Not Provided</span>
+                            }
+                            else
+                            {
+                                @Model.Email
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4"><strong>University</strong></dt>
+                        <dd class="col-sm-8">
+                            @if (Model?.University == null)
+                            {
+                                <span class="text-muted">Not Provided</span>
+                            }
+                            else
+                            {
+                                @Model.University.Name
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4"><strong>Hire date</strong></dt>
+                        <dd class="col-sm-8">
+                            @if (Model?.HireDate != null)
+                            {
+                                @Model.HireDate.ToString("yyyy-MM-dd")
+                            }
+                            else
+                            {
+                                <span class="text-muted">Not Provided</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4"><strong>Subjects count</strong></dt>
+                        <dd class="col-sm-8"><span class="badge bg-secondary">@((Model?.Subjects?.Count) ?? 0)</span></dd>
+                    </dl>
+                </div>
+
+                <div class="card-footer text-end mt-auto">
+                    <a asp-action="Index" class="btn btn-sm btn-secondary">Back to list</a>
+                </div>
+            </div>
         </div>
-
     </div>
 
-    <h3 class="my-4">Lecturer of subjects:</h3>
 
-    <div class="row">
 
-        @foreach (Subject subject in Model.Subjects ?? Enumerable.Empty<Subject>())
+    <h5 class="my-4">Lecturer of subjects</h5>
+
+    <div class="row g-3">
+        @if (!(Model?.Subjects?.Any() ?? false))
         {
-            <p>@subject.Name</p>
+            <div class="col-12">
+                <div class="alert alert-secondary mb-0">No subjects assigned</div>
+            </div>
         }
-
+        else
+        {
+            @foreach (var subject in Model.Subjects)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title mb-2">@subject.Name</h5>
+                            <p class="card-text text-muted mb-2 small">@(!string.IsNullOrWhiteSpace(subject?.Description) ? subject.Description : "No description")</p>
+                            <div class="mt-auto d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">ID: @subject.Id</span>
+                                <a asp-controller="Subject" asp-action="Details" asp-route-id="@subject.Id" class="btn btn-sm btn-outline-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>

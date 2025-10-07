@@ -11,16 +11,16 @@
 
     <div class="form-group">
         <label asp-for="Name">Name</label>
-        <input asp-for="Name" class="form-control" placeholder="Name">
+        <input asp-for="Name" class="form-control" placeholder="Name" readonly>
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="City">City</label>
-        <input asp-for="City" class="form-control" placeholder="City">
+        <input asp-for="City" class="form-control" placeholder="City" readonly>
         <span asp-validation-for="City" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
-
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 </form>

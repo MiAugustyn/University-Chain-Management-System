@@ -6,6 +6,7 @@ namespace University_Chain_Management_System.Repositories
     {
         Task<IEnumerable<Subject>> GetAll();
         Task<Subject> GetById(int id);
+        Task<IEnumerable<Subject>> GetSubjectsWithAssignedUniversities();
         bool Add(Subject subject);
         bool Update(Subject subject);
         bool Delete(Subject subject);

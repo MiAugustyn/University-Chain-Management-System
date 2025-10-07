@@ -3,7 +3,6 @@
     public class GradeViewModel
     {
         public Grade Grade { get; set; }
-        public IEnumerable<Student> Students { get; set; }
         public IEnumerable<Subject> Subjects { get; set; }
     }
 }

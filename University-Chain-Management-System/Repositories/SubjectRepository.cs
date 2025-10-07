@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University_Chain_Management_System.Data;
 using University_Chain_Management_System.Models;
+using University_Chain_Management_System.Models.ViewModels;
 
 namespace University_Chain_Management_System.Repositories
 {
@@ -33,8 +34,30 @@ namespace University_Chain_Management_System.Repositories
         public async Task<Subject> GetById(int id)
         {
             return await _context.Subjects
-                .Include(s => s.Employee).Include(s => s.Major)
+                .Include(s => s.Employee)
+                .Include(s => s.Major)
+                    .ThenInclude(m => m.University)
+                .Include(s => s.Grades)
                 .FirstOrDefaultAsync(s => s.Id == id);
+        }
+
+        public async Task<IEnumerable<Subject>> GetSubjectsWithAssignedUniversities()
+        {
+            return await _context.Subjects
+               .Include(s => s.Employee)
+               .Include(s => s.Major)
+                   .ThenInclude(m => m.University)
+               .Include(s => s.Grades)
+               .Where(s => s.Major != null && s.Major.University != null)
+               .ToListAsync();
+
+        }
+
+        public async Task<IEnumerable<Subject>> GetSubjectsByMajorId(int id)
+        {
+            return await _context.Subjects
+            .Where(s => s.MajorId.HasValue && s.MajorId == id)
+            .ToListAsync();
         }
 
         public bool Save()

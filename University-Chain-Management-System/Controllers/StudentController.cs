@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using University_Chain_Management_System.Models;
+using University_Chain_Management_System.Models.ViewModels;
 using University_Chain_Management_System.Repositories;
 
 namespace University_Chain_Management_System.Controllers
@@ -23,7 +25,11 @@ namespace University_Chain_Management_System.Controllers
         {
             Student student = await _studentRepository.GetById(id);
 
-            return View(student);
+            if (student == null) { return View("Error"); }
+
+            StudentViewModel viewModel = await _studentRepository.GetViewModelById(id);
+
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Create()
@@ -37,7 +43,8 @@ namespace University_Chain_Management_System.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View();
+                ModelState.AddModelError("", "Fill all fields with valid data.");
+                return View(student);
             }
 
             _studentRepository.Add(student);
@@ -58,8 +65,8 @@ namespace University_Chain_Management_System.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Failed to edit");
-                return View("Edit", student);
+                ModelState.AddModelError("", "Fill all fields with valid data.");
+                return View(student);
             }
 
             _studentRepository.Update(student);

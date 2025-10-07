@@ -8,22 +8,132 @@
 
 <div class="container">
 
-    <h1 class="my-4">Student: @Model.Student?.FullName</h1>
-    <h1 class="my-4">Major: @Model.Major?.Name</h1>
-    <h1 class="my-4">ID: @Model.Id</h1>
+    <div class="col-12">
+        <h5 class="my-3">Student's Major</h5>
 
-    <div class="row">
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <strong>Student</strong>
+                    </div>
 
-        <div class="col-md-4">
-            <h3 class="my-3">Informations:</h3>
+                    <div class="card-body d-flex flex-column align-items-center text-center">
+                        @if (Model?.Student == null)
+                        {
+                            <div class="alert alert-secondary w-100 mb-0">No student linked</div>
+                        }
+                        else
+                        {
+                            var student = Model.Student;
+                            <img class="rounded-circle mb-2" loading="lazy" width="96" height="96" style="object-fit:cover;"
+                                 src="@(string.IsNullOrWhiteSpace(student?.Image) ? Constants.DefaultUserImage : student.Image)"
+                                 onerror="this.onerror=null;this.src='@Constants.DefaultUserImage';"
+                                 alt="@(!string.IsNullOrWhiteSpace(student?.FullName) ? student.FullName + " photo" : "Student photo")" />
 
-            <ul>
-                <li>Enrollment Date: @Model.EnrollmentDate</li>
-                <li>Graduation Date: @Model.GraduationDate</li>
-                <li>Student Status: @Model.StudentStatus</li>
-            </ul>
+
+                            <h5 class="card-title mb-1">@student?.FullName</h5>
+                            <p class="card-text small text-muted mb-2">ID: @student.Id</p>
+                            <div class="mt-auto">
+                                <a asp-controller="Student" asp-action="Details" asp-route-id="@student.Id" class="btn btn-sm btn-outline-primary">View</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <strong>Major</strong>
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+                        @if (Model?.Major == null)
+                        {
+                            <div class="alert alert-secondary mb-0">No major assigned</div>
+                        }
+                        else
+                        {
+                            var major = Model.Major;
+                            <h5 class="card-title mb-1">@major.Name</h5>
+                            <p class="card-text text-muted mb-2 small">
+                                @(string.IsNullOrWhiteSpace(major?.Description) ? "No description" : major.Description)
+                            </p>
+
+                            <div class="mt-auto d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">ID: @major.Id</span>
+                                <a asp-controller="Major" asp-action="Details" asp-route-id="@major.Id" class="btn btn-sm btn-outline-primary">View</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
 
+    <div class="row my-4 align-items-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body d-flex flex-column flex-sm-row gap-3">
+                    <div class="flex-grow-1">
+
+                            <dt class="col-sm-4"><strong>Enrollment Date</strong></dt>
+                            <dd class="col-sm-8">
+                                @if (Model?.EnrollmentDate != null)
+                                {
+                                    @Model.EnrollmentDate.ToString("yyyy-MM-dd")
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not Provided</span>
+                                }
+                            </dd>
+
+                            <dt class="col-sm-4"><strong>Graduation Date</strong></dt>
+                            <dd class="col-sm-8">
+                                @if (Model?.GraduationDate != null)
+                                {
+                                    @Model.GraduationDate.ToString("yyyy-MM-dd")
+                                }
+                                else
+                                {
+                                    <span class="text-muted">—</span>
+                                }
+                            </dd>
+
+                            <dt class="col-sm-4"><strong>Student Status</strong></dt>
+                            <dd class="col-sm-8">
+                                @if (Model?.StudentStatus == null)
+                                {
+                                    <span class="text-muted">Unknown</span>
+                                }
+                                else
+                                {
+                                    @Model.StudentStatus
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Quick Info</h5>
+                </div>
+
+                <div class="card-body">
+                    <p class="mb-2"><strong>Student's Major ID</strong> <span class="badge bg-secondary ms-2">@Model?.Id</span></p>
+                    <p class="mb-2"><strong>Grades Count</strong> <span class="badge bg-secondary ms-2">@(Model?.Student?.Grades?.Count ?? 0)</span></p>
+                    <p class="mb-2"><strong>Majors Count</strong> <span class="badge bg-secondary ms-2">@(Model?.Student?.Majors?.Count ?? 0)</span></p>
+                </div>
+
+                <div class="card-footer text-end">
+                    <a asp-action="Index" class="btn btn-sm btn-secondary">Back to list</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-

@@ -1,4 +1,4 @@
-﻿@model Student
+﻿@model StudentViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -7,37 +7,130 @@
 }
 
 <div class="container">
-
-    <h1 class="my-4">@Model.FullName</h1>
-
-    <div class="row">
-
+    <div class="row my-4">
         <div class="col-md-8">
-            <img class="img-fluid" src="@Model.Image" alt="Student">
-        </div>
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex align-items-center justify-content-center p-3">
+                        <img class="card-img img-fluid rounded" loading="lazy"
+                             src="@(string.IsNullOrWhiteSpace(Model?.Student?.Image) ? Constants.DefaultUserImage : Model.Student.Image)"
+                             onerror="this.src='@Constants.DefaultUserImage';"
+                             alt="@(!string.IsNullOrWhiteSpace(Model?.Student?.FullName) ? Model.Student.FullName + " photo" : "Student photo")">
 
-        <div class="col-md-4">
-            <h3 class="my-3">Informations:</h3>
-
-            <ul>
-                <li>ID: @Model.Id</li>
-                <li>Grades count: @Model.Grades?.Count</li>
-                <li>Majors count: @Model.Majors?.Count</li>
-            </ul>
-        </div>
-
-    </div>
-
-    <h3 class="my-4">Grades:</h3>
-
-    <div class="row">
-
-        @foreach (Grade grade in Model.Grades ?? Enumerable.Empty<Grade>())
-        {
-            <div class="col-md-3 col-sm-6 mb-4">
-                    <p>@grade.Value</p>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title mb-1">@Model.Student.FullName</h4>
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <strong>Email</strong>
+                                    @if (string.IsNullOrWhiteSpace(Model?.Student?.Email))
+                                    {
+                                        <span class="text-muted">Not Provided</span>
+                                    }
+                                    else
+                                    {
+                                        @Model.Student.Email
+                                    }
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-        }
+        </div>
 
+        <div class="col-md-4 d-flex align-items-start">
+            <div class="w-100">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Quick Info</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="mb-2"><strong>Student ID </strong><span class="badge bg-secondary"> @Model.Student.Id</span></p>
+                        <p class="mb-2"><strong>Grades Count </strong><span class="badge bg-secondary"> @(Model.Student.Grades?.Count ?? 0)</span></p>
+                        <p class="mb-2"><strong>Majors Count </strong><span class="badge bg-secondary"> @(Model.Student.Majors?.Count ?? 0)</span></p>
+                    </div>
+
+                    <div class="card-footer text-end">
+                        <a asp-action="Index" class="btn btn-sm btn-secondary">Back to list</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="my-4">Grades</h3>
+
+        <div class="row">
+            @if (!(Model.Majors?.Any() ?? false))
+            {
+                <div class="col-12">
+                    <div class="alert alert-secondary mb-0">No majors assigned</div>
+                </div>
+            }
+            else
+            {
+                @foreach (var major in Model.Majors)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <strong>Major</strong> @major.Name
+                            </div>
+
+                            <div class="card-body">
+                                @{
+                                    var subjects = Model.Subjects?.Where(s => s.MajorId == major.Id).ToList() ?? new List<Subject>();
+                                }
+
+                                @if (!subjects.Any())
+                                {
+                                    <div class="text-center text-muted">No subjects</div>
+                                }
+                                else
+                                {
+                                    <div class="list-group list-group-flush">
+                                        @foreach (var subject in subjects)
+                                        {
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between align-items-start">
+                                                    <div>
+                                                        <h6 class="mb-1">@subject.Name</h6>
+                                                        <small class="text-muted">Student's grades</small>
+                                                    </div>
+
+                                                    @{
+                                                        var grades = Model.Grades?.Where(g => g.SubjectId == subject.Id).ToList() ?? new List<Grade>();
+                                                    }
+
+                                                    @if (!grades.Any())
+                                                    {
+                                                        <span class="badge bg-secondary">Empty</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div>
+                                                            @foreach (var grade in grades)
+                                                            {
+                                                                <span class="badge bg-success me-1">@grade.Value</span>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="card-footer text-end small text-muted">
+                                Subjects @subjects.Count
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
     </div>
 </div>

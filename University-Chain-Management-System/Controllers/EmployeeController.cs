@@ -63,7 +63,11 @@ namespace University_Chain_Management_System.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(viewModel);
+                if (!ModelState.IsValid)
+                {
+                    ModelState.AddModelError("", "Fill all fields with valid data.");
+                    return View(viewModel);
+                }
             }
 
             _employeeRepository.Add(employee);
@@ -102,10 +106,10 @@ namespace University_Chain_Management_System.Controllers
                 Positions = positions
             };
 
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Failed to edit");
-                return View("Edit", viewModel);
+                ModelState.AddModelError("", "Fill all fields with valid data.");
+                return View(viewModel);
             }
 
             _employeeRepository.Update(employee);

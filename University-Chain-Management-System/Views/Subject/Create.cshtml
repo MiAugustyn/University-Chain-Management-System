@@ -21,22 +21,22 @@
 
     <div class="form-group">
         <label asp-for="Subject.MajorId">Major</label>
-        <select asp-for="Subject.MajorId"
-                asp-items="@(new SelectList(Model.Majors, "Id", "Name"))"
-                class="form-control">
+        <select asp-for="Subject.MajorId" class="form-control" placeholder="Major"
+                asp-items="@(new SelectList(Model.Majors, "Id", "Name"))">
+                <option value="">Select Major</option>
         </select>
         <span asp-validation-for="Subject.MajorId" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Subject.EmployeeId">Employee</label>
-        <select asp-for="Subject.EmployeeId"
-                asp-items="@(new SelectList(Model.Employees, "Id", "FullName"))"
-                class="form-control">
+        <select asp-for="Subject.EmployeeId" class="form-control" placeholder="Employee"
+                asp-items="@(new SelectList(Model.Employees, "Id", "FullName"))">
+                <option value="">Select Employee</option>
         </select>
         <span asp-validation-for="Subject.EmployeeId" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
-
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 </form>

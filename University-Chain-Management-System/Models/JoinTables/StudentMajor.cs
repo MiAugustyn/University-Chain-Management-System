@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using University_Chain_Management_System.Data.Enums;
+using University_Chain_Management_System.ModelsValidations;
 
 namespace University_Chain_Management_System.Models.JoinTables
 {
@@ -15,8 +16,10 @@ namespace University_Chain_Management_System.Models.JoinTables
         public int MajorId { get; set; }
         public Major? Major { get; set; }
         [DataType(DataType.Date)]
+        [DateValidation]
         public DateTime EnrollmentDate { get; set; }
         [DataType(DataType.Date)]
+        [DateValidation]
         public DateTime GraduationDate { get; set; }
         public StudentStatus StudentStatus { get; set; }
     }

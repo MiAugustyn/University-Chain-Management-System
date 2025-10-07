@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using University_Chain_Management_System.Models;
 using University_Chain_Management_System.Models.JoinTables;
 using University_Chain_Management_System.Models.ViewModels;
@@ -73,28 +74,6 @@ namespace University_Chain_Management_System.Controllers.JoinTables
         [HttpPost]
         public async Task<IActionResult> Create(StudentMajor studentMajor)
         {
-            if (!ModelState.IsValid)
-            {
-                IEnumerable<Student> students = await _studentRepository.GetAll();
-                IEnumerable<Major> majors = await _majorRepository.GetAll();
-
-                StudentMajorViewModel viewModel = new StudentMajorViewModel()
-                {
-                    StudentMajor = studentMajor,
-                    Students = students,
-                    Majors = majors
-                };
-
-                return View(viewModel);
-            }
-
-            _studentMajorRepository.Add(studentMajor);
-            return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> Edit(int id)
-        {
-            StudentMajor studentMajor = await _studentMajorRepository.GetById(id);
             IEnumerable<Student> students = await _studentRepository.GetAll();
             IEnumerable<Major> majors = await _majorRepository.GetAll();
 
@@ -105,7 +84,38 @@ namespace University_Chain_Management_System.Controllers.JoinTables
                 Majors = majors
             };
 
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Fill all fields with valid data.");
+                return View(viewModel);
+            }
+
+            if (studentMajor.EnrollmentDate >= studentMajor.GraduationDate)
+            {
+                ModelState.AddModelError("StudentMajor.GraduationDate", "Graduation date must occur after enrollment date.");
+                return View("Create", viewModel);
+            }
+
+            _studentMajorRepository.Add(studentMajor);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            StudentMajor studentMajor = await _studentMajorRepository.GetById(id);
+
             if (studentMajor == null) { return View("Error"); }
+
+            IEnumerable<Student> students = await _studentRepository.GetAll();
+            IEnumerable<Major> majors = await _majorRepository.GetAll();
+
+            StudentMajorViewModel viewModel = new StudentMajorViewModel()
+            {
+                StudentMajor = studentMajor,
+                Students = students,
+                Majors = majors
+            };
 
             return View(viewModel);
         }
@@ -113,19 +123,25 @@ namespace University_Chain_Management_System.Controllers.JoinTables
         [HttpPost]
         public async Task<IActionResult> Edit(StudentMajor studentMajor)
         {
+            IEnumerable<Student> students = await _studentRepository.GetAll();
+            IEnumerable<Major> majors = await _majorRepository.GetAll();
+
+            StudentMajorViewModel viewModel = new StudentMajorViewModel()
+            {
+                StudentMajor = studentMajor,
+                Students = students,
+                Majors = majors
+            };
+
             if (!ModelState.IsValid)
             {
-                IEnumerable<Student> students = await _studentRepository.GetAll();
-                IEnumerable<Major> majors = await _majorRepository.GetAll();
+                ModelState.AddModelError("", "Fill all fields with valid data.");
+                return View("Edit", viewModel);
+            }
 
-                StudentMajorViewModel viewModel = new StudentMajorViewModel()
-                {
-                    StudentMajor = studentMajor,
-                    Students = students,
-                    Majors = majors
-                };
-
-                ModelState.AddModelError("", "Failed to edit");
+            if (studentMajor.EnrollmentDate >= studentMajor.GraduationDate)
+            {
+                ModelState.AddModelError("StudentMajor.GraduationDate", "Graduation date must occur after enrollment date.");
                 return View("Edit", viewModel);
             }
 
@@ -153,6 +169,23 @@ namespace University_Chain_Management_System.Controllers.JoinTables
             _studentMajorRepository.Delete(studentMajor);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        // Get students not enrolled in a major.
+        // Use currentStudentId to display current student as first option (for edit views)
+        public async Task<IActionResult> GetAvailableStudents(int majorId, int? currentStudentId = null)
+        {
+            var enrolledStudentIds = (await _studentMajorRepository.GetByMajorId(majorId))
+                .Select(sm => sm.StudentId)
+                .ToList();
+
+            var availableStudents = (await _studentRepository.GetAll())
+                .Where(s => !enrolledStudentIds.Contains(s.Id) || (currentStudentId.HasValue && s.Id == currentStudentId.Value))
+                .Select(s => new { s.Id, s.FullName })
+                .ToList();
+
+            return Json(availableStudents);
         }
     }
 }
