@@ -23,6 +23,9 @@ namespace University_Chain_Management_System.Controllers
         public async Task<IActionResult> Details(int id)
         {
             Position position = await _positionRepository.GetById(id);
+
+            if (position == null) { return View("Error"); }
+
             return View(position);
         }
 

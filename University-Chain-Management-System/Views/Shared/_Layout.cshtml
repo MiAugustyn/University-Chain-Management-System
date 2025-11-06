@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/University_Chain_Management_System.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand fw-bold text-primary" asp-area="" asp-controller="Home" asp-action="Index">UCMS</a>
+                <a class="fw-bold text-primary" asp-area="" asp-controller="Home" asp-action="Index">UCMS</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".main-navbar-collapse"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -60,48 +62,50 @@
 
     <footer class="site-footer py-5" role="contentinfo">
         <div class="container">
-            <div class="footer-content d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-                <div class="brand d-flex align-items-center gap-3">
-                    <div class="brand-mark" aria-hidden="true">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917zM8 8.46 1.758 5.965 8 3.052l6.242 2.913z" />
-                            <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46z" />
-                        </svg>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <div class="ucms-icon d-inline-flex align-items-center justify-content-center p-2 bg-secondary rounded me-3 text-blue" aria-hidden="true">
+                        <i class="bi bi-mortarboard fs-4"></i>
                     </div>
                     <div>
                         <div class="h6 mb-0 text-white fw-bold">UCMS</div>
-                        <small class="text-white-50">University Chain Management System</small>
+                        <small class="text-white-50 text-break">University Chain Management System</small>
                     </div>
                 </div>
 
-                <nav class="footer-nav d-flex gap-2 align-items-center" aria-label="Footer navigation">
-                    <a class="footer-link" asp-controller="Home" asp-action="Index">Home</a>
-                    <button class="back-to-top" onclick="scrollToTop()" aria-label="Back to top">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2L6.343 7.657l1.414 1.414L11 5.828V22h2V5.828l3.243 3.243 1.414-1.414L12 2z" />
-                        </svg>
-                        Top
+                <nav class="d-flex align-items-center gap-3" aria-label="Footer navigation">
+                    <a class="footer-button-pushable text-decoration-none" role="button" onclick="scrollToTop()" asp-controller="Home" asp-action="Index" aria-label="Back to home page">
+                        <span class="footer-button-shadow"> </span>
+                        <span class="footer-button-edge"> </span>
+                        <span class="footer-button-front">
+                            <i class="bi bi-house-door"></i>
+                            Home
+                    </a>
+
+                    <button class="footer-button-pushable" role="button" onclick="scrollToTop()" aria-label="Back to top">
+                        <span class="footer-button-shadow"> </span>
+                        <span class="footer-button-edge"> </span>
+                        <span class="footer-button-front text">
+                            <i class="bi bi-arrow-up"></i>
+                            Top
+                        </span>
                     </button>
                 </nav>
 
-                <div class="social d-flex gap-2">
-                    <a class="social-btn" target="_blank" rel="noopener noreferrer" href="https://github.com/MiAugustyn" aria-label="Visit GitHub">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.01-2-3.2.7-3.88-1.45-3.88-1.45-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.11-.75.4-1.26.72-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18A11.04 11.04 0 0112 6.8c.98.004 1.97.13 2.89.38 2.2-1.5 3.17-1.18 3.17-1.18.64 1.59.24 2.77.12 3.06.74.81 1.19 1.84 1.19 3.1 0 4.44-2.71 5.41-5.29 5.69.41.36.78 1.07.78 2.16 0 1.56-.015 2.82-.015 3.2 0 .31.21.68.8.56A11.52 11.52 0 0023.5 12C23.5 5.65 18.35.5 12 .5z" />
-                        </svg>
+                <div class="social d-flex gap-3">
+                    <a class="social-btn github-colors" target="_blank" rel="noopener noreferrer" href="https://github.com/MiAugustyn" aria-label="Visit GitHub">
+                        <i class="bi bi-github"></i>
                     </a>
-                    <a class="social-btn" target="_blank" rel="noopener noreferrer" href="https://linkedin.com/in/miaugustyn" aria-label="Visit LinkedIn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M4.98 3.5C3.88 3.5 3 4.4 3 5.5 3 6.6 3.88 7.5 4.98 7.5c1.1 0 1.98-.9 1.98-2 0-1.1-.88-2-1.98-2zM3.75 9h2.46V21H3.75zM9.75 9h2.36v1.67h.03c.33-.63 1.13-1.29 2.33-1.29 2.49 0 2.95 1.64 2.95 3.77V21h-2.46v-5.08c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68V21H9.75z" />
-                        </svg>
+                    <a class="social-btn linkedin-colors" target="_blank" rel="noopener noreferrer" href="https://linkedin.com/in/miaugustyn" aria-label="Visit LinkedIn">
+                        <i class="bi bi-linkedin"></i>
                     </a>
                 </div>
             </div>
 
             <hr class="footer-divider my-4" />
 
-            <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-                <div class="text-muted small text-center">
+            <div class="text-white d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <div class="small text-center">
                     <span>Built with <span aria-hidden="true">❤</span> and <span class="fw-bold">ASP.NET Core</span></span>
                 </div>
 

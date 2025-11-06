@@ -22,6 +22,9 @@ namespace University_Chain_Management_System.Controllers
         public async Task<IActionResult> Details(int id)
         {
             University university = await _universityRepository.GetById(id);
+
+            if (university == null) { return View("Error"); }
+
             return View(university);
         }
 

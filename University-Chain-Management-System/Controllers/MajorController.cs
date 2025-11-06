@@ -27,6 +27,8 @@ namespace University_Chain_Management_System.Controllers
         {
             Major major = await _majorRepository.GetById(id);
 
+            if (major == null) { return View("Error"); }
+
             return View(major);
         }
 
@@ -46,17 +48,18 @@ namespace University_Chain_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Major major)
         {
-            IEnumerable<University> universities = await _universityRepository.GetAll();
-
-            MajorViewModel viewModel = new MajorViewModel()
-            {
-                Major = major,
-                Universities = universities
-            };
-
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Fill all fields with valid data.");
+
+                IEnumerable<University> universities = await _universityRepository.GetAll();
+
+                MajorViewModel viewModel = new MajorViewModel()
+                {
+                    Major = major,
+                    Universities = universities
+                };
+
                 return View(viewModel);
             }
 
@@ -84,17 +87,18 @@ namespace University_Chain_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Major major)
         {
-            IEnumerable<University> universities = await _universityRepository.GetAll();
-
-            MajorViewModel viewModel = new MajorViewModel()
-            {
-                Major = major,
-                Universities = universities
-            };
-
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Fill all fields with valid data.");
+
+                IEnumerable<University> universities = await _universityRepository.GetAll();
+
+                MajorViewModel viewModel = new MajorViewModel()
+                {
+                    Major = major,
+                    Universities = universities
+                };
+
                 return View(viewModel);
             }
 

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Notification>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["TItle"] = "Notifications";
+}
+
+<a asp-controller="Notification"
+   asp-action="Create"
+   class="btn btn-outline-primary btn-lg w-100"
+   type="button">
+    Create new Notification
+</a>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+
+        <div class="row">
+            @foreach (Notification notification in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <p class="card-text">Title: @notification.Title</p>
+                            <p class="card-text">Description: @notification.Description</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a asp-controller="Notification" asp-action="Details" asp-route-id="@notification.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                    <a asp-controller="Notification" asp-action="Edit" asp-route-id="@notification.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a asp-controller="Notification" asp-action="Delete" asp-route-id="@notification.Id" type="button" class="btn btn-sm btn-outline-secondary">Delete</a>
+                                </div>
+                                <small class="text-muted">@notification.Id</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>

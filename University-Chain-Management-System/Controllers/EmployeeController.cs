@@ -30,6 +30,8 @@ namespace University_Chain_Management_System.Controllers
         {
             Employee employee = await _employeeRepository.GetById(id);
 
+            if (employee == null) { return View("Error"); }
+
             return View(employee);
         }
 
@@ -51,23 +53,21 @@ namespace University_Chain_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Employee employee)
         {
-            IEnumerable<University> universities = await _universityRepository.GetAll();
-            IEnumerable<Position> positions = await _positionRepository.GetAll();
-
-            EmployeeViewModel viewModel = new EmployeeViewModel()
-            {
-                Employee = employee,
-                Universities = universities,
-                Positions = positions
-            };
-
             if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
+                ModelState.AddModelError("", "Fill all fields with valid data.");
+
+                IEnumerable<University> universities = await _universityRepository.GetAll();
+                IEnumerable<Position> positions = await _positionRepository.GetAll();
+
+                EmployeeViewModel viewModel = new EmployeeViewModel()
                 {
-                    ModelState.AddModelError("", "Fill all fields with valid data.");
-                    return View(viewModel);
-                }
+                    Employee = employee,
+                    Universities = universities,
+                    Positions = positions
+                };
+
+                return View(viewModel);
             }
 
             _employeeRepository.Add(employee);
@@ -96,19 +96,22 @@ namespace University_Chain_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Employee employee)
         {
-            IEnumerable<University> universities = await _universityRepository.GetAll();
-            IEnumerable<Position> positions = await _positionRepository.GetAll();
 
-            EmployeeViewModel viewModel = new EmployeeViewModel()
-            {
-                Employee = employee,
-                Universities = universities,
-                Positions = positions
-            };
 
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Fill all fields with valid data.");
+
+                IEnumerable<University> universities = await _universityRepository.GetAll();
+                IEnumerable<Position> positions = await _positionRepository.GetAll();
+
+                EmployeeViewModel viewModel = new EmployeeViewModel()
+                {
+                    Employee = employee,
+                    Universities = universities,
+                    Positions = positions
+                };
+
                 return View(viewModel);
             }
 

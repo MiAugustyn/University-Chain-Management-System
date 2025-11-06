@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using University_Chain_Management_System.ModelsValidations;
 
 namespace University_Chain_Management_System.Models
 {
@@ -14,5 +15,8 @@ namespace University_Chain_Management_System.Models
         [ForeignKey("Subject")]
         public int SubjectId { get; set; }
         public Subject? Subject { get; set; }
+        [DataType(DataType.Date)]
+        [CreationDateValidation]
+        public DateTime IssuanceDate { get; set; }
     }
 }

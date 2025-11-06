@@ -12,8 +12,7 @@ namespace University_Chain_Management_System.Controllers
         private readonly IGradeRepository _gradeRepository;
         private readonly ISubjectRepository _subjectRepository;
 
-        public GradeController(IGradeRepository gradeRepository, 
-            IStudentRepository studentRepository, ISubjectRepository subjectRepository )
+        public GradeController(IGradeRepository gradeRepository, ISubjectRepository subjectRepository )
         {
             _gradeRepository = gradeRepository;
             _subjectRepository = subjectRepository;
@@ -29,6 +28,8 @@ namespace University_Chain_Management_System.Controllers
         public async Task<IActionResult> Details(int id)
         {
             Grade grade = await _gradeRepository.GetById(id);
+
+            if (grade == null) { return View("Error"); }
 
             return View(grade);
         }
@@ -49,17 +50,18 @@ namespace University_Chain_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Grade grade)
         {
-            IEnumerable<Subject> subjects = await _subjectRepository.GetSubjectsWithAssignedUniversities();
-
-            GradeViewModel viewModel = new GradeViewModel()
-            {
-                Grade = grade,
-                Subjects = subjects
-            };
-
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Fill all fields with valid data.");
+
+                IEnumerable<Subject> subjects = await _subjectRepository.GetSubjectsWithAssignedUniversities();
+
+                GradeViewModel viewModel = new GradeViewModel()
+                {
+                    Grade = grade,
+                    Subjects = subjects
+                };
+
                 return View(viewModel);
             }
 
@@ -87,17 +89,18 @@ namespace University_Chain_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Grade grade)
         {
-            IEnumerable<Subject> subjects = await _subjectRepository.GetSubjectsWithAssignedUniversities();
-
-            GradeViewModel viewModel = new GradeViewModel()
-            {
-                Grade = grade,
-                Subjects = subjects
-            };
-
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Fill all fields with valid data.");
+
+                IEnumerable<Subject> subjects = await _subjectRepository.GetSubjectsWithAssignedUniversities();
+
+                GradeViewModel viewModel = new GradeViewModel()
+                {
+                    Grade = grade,
+                    Subjects = subjects
+                };
+
                 return View(viewModel);
             }
 

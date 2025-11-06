@@ -40,7 +40,6 @@ namespace University_Chain_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Student student)
         {
-
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Fill all fields with valid data.");

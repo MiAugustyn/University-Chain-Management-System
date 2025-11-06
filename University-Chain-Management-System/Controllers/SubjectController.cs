@@ -36,6 +36,9 @@ namespace University_Chain_Management_System.Controllers
         public async Task<IActionResult> Details(int id)
         {
             Subject subject = await _subjectRepository.GetById(id);
+
+            if (subject == null) { return View("Error"); }
+
             return View(subject);
         }
 
@@ -57,20 +60,20 @@ namespace University_Chain_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Subject subject)
         {
-
-            IEnumerable<Employee> employees = await _employeeRepository.GetAll();
-            IEnumerable<Major> majors = await _majorRepository.GetAll();
-
-            SubjectViewModel viewModel = new SubjectViewModel()
-            {
-                Subject = subject,
-                Majors = majors,
-                Employees = employees
-            };
-
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Fill all fields with valid data.");
+
+                IEnumerable<Employee> employees = await _employeeRepository.GetAll();
+                IEnumerable<Major> majors = await _majorRepository.GetAll();
+
+                SubjectViewModel viewModel = new SubjectViewModel()
+                {
+                    Subject = subject,
+                    Majors = majors,
+                    Employees = employees
+                };
+
                 return View(viewModel);
             }
 
@@ -100,20 +103,20 @@ namespace University_Chain_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Subject subject)
         {
-
-            IEnumerable<Employee> employees = await _employeeRepository.GetAll();
-            IEnumerable<Major> majors = await _majorRepository.GetAll();
-
-            SubjectViewModel viewModel = new SubjectViewModel()
-            {
-                Subject = subject,
-                Majors = majors,
-                Employees = employees
-            };
-
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Fill all fields with valid data.");
+
+                IEnumerable<Employee> employees = await _employeeRepository.GetAll();
+                IEnumerable<Major> majors = await _majorRepository.GetAll();
+
+                SubjectViewModel viewModel = new SubjectViewModel()
+                {
+                    Subject = subject,
+                    Majors = majors,
+                    Employees = employees
+                };
+
                 return View(viewModel);
             }
 

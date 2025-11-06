@@ -36,6 +36,11 @@ namespace University_Chain_Management_System.Repositories
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
+        public async Task<IEnumerable<Employee>> GetByYear(int year)
+        {
+            return await _context.Employees.Where(e => e.HireDate.Year == year).ToListAsync();
+        }
+
         public bool Save()
         {
             var save = _context.SaveChanges();

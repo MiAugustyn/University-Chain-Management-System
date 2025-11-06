@@ -71,10 +71,13 @@ namespace University_Chain_Management_System.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("StudentId")
+                    b.Property<DateTime>("IssuanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SubjectId")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
                     b.Property<float>("Value")
@@ -116,7 +119,8 @@ namespace University_Chain_Management_System.Migrations
 
                     b.HasIndex("MajorId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentId", "MajorId")
+                        .IsUnique();
 
                     b.ToTable("StudentsMajors");
                 });
@@ -137,7 +141,7 @@ namespace University_Chain_Management_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UniversityId")
+                    b.Property<int>("UniversityId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -145,6 +149,33 @@ namespace University_Chain_Management_System.Migrations
                     b.HasIndex("UniversityId");
 
                     b.ToTable("Majors");
+                });
+
+            modelBuilder.Entity("University_Chain_Management_System.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NotificationType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("University_Chain_Management_System.Models.Position", b =>
@@ -267,11 +298,15 @@ namespace University_Chain_Management_System.Migrations
                 {
                     b.HasOne("University_Chain_Management_System.Models.Student", "Student")
                         .WithMany("Grades")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("University_Chain_Management_System.Models.Subject", "Subject")
                         .WithMany("Grades")
-                        .HasForeignKey("SubjectId");
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Student");
 
@@ -301,7 +336,9 @@ namespace University_Chain_Management_System.Migrations
                 {
                     b.HasOne("University_Chain_Management_System.Models.University", "University")
                         .WithMany("Majors")
-                        .HasForeignKey("UniversityId");
+                        .HasForeignKey("UniversityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("University");
                 });

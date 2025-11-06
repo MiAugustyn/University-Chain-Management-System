@@ -6,11 +6,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace University_Chain_Management_System.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class NewBaselineMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NotificationType = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PublishDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Positions",
                 columns: table => new
@@ -32,7 +48,9 @@ namespace University_Chain_Management_System.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,6 +79,8 @@ namespace University_Chain_Management_System.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PositionId = table.Column<int>(type: "int", nullable: true),
                     UniversityId = table.Column<int>(type: "int", nullable: true)
@@ -88,7 +108,7 @@ namespace University_Chain_Management_System.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UniversityId = table.Column<int>(type: "int", nullable: true)
+                    UniversityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,13 +117,16 @@ namespace University_Chain_Management_System.Migrations
                         name: "FK_Majors_Universities_UniversityId",
                         column: x => x.UniversityId,
                         principalTable: "Universities",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "StudentsMajors",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     MajorId = table.Column<int>(type: "int", nullable: false),
                     EnrollmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -112,7 +135,7 @@ namespace University_Chain_Management_System.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentsMajors", x => new { x.StudentId, x.MajorId });
+                    table.PrimaryKey("PK_StudentsMajors", x => x.Id);
                     table.ForeignKey(
                         name: "FK_StudentsMajors_Majors_MajorId",
                         column: x => x.MajorId,
@@ -160,8 +183,8 @@ namespace University_Chain_Management_System.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Value = table.Column<float>(type: "real", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: true),
-                    SubjectId = table.Column<int>(type: "int", nullable: true)
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    SubjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -170,12 +193,14 @@ namespace University_Chain_Management_System.Migrations
                         name: "FK_Grades_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Grades_Subjects_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -209,6 +234,12 @@ namespace University_Chain_Management_System.Migrations
                 column: "MajorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StudentsMajors_StudentId_MajorId",
+                table: "StudentsMajors",
+                columns: new[] { "StudentId", "MajorId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Subjects_EmployeeId",
                 table: "Subjects",
                 column: "EmployeeId");
@@ -224,6 +255,9 @@ namespace University_Chain_Management_System.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Grades");
+
+            migrationBuilder.DropTable(
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "StudentsMajors");

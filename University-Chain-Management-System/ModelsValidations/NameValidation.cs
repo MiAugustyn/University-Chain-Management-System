@@ -11,9 +11,12 @@ namespace University_Chain_Management_System.ModelsValidations
 
             if (name == null) { return new ValidationResult("Name cannot be empty."); }
             if (name.Length > 64) { return new ValidationResult("Name is too long. (maximum 254 characters)"); }
-            if (Regex.IsMatch(name, @"[^A-Za-z]")) { return new ValidationResult("Name contains invalid characters. Only letters are allowed."); }
+
+            var pattern = @"^[\p{L}\p{M}\s]+$";
+            if (!Regex.IsMatch(name, pattern)) { return new ValidationResult("Name contains invalid characters. Only letters are allowed."); }
 
             return ValidationResult.Success;
         }
     }
 }
+

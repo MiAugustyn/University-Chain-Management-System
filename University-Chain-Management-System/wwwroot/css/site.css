@@ -1,6 +1,16 @@
-html {
-  font-size: 14px;
+:root {
+    --primary-blue: #2563eb;
+    --secondary-blue: #1e40af;
+    --success-green: #059669;
+    --stable-grey: #6c757d;
+    --warning-orange: #d97706;
+    --danger-red: #dc2626;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --button-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb
 }
+
+html {
+    font-size: 14px;
 
 @media (min-width: 768px) {
   html {
@@ -8,11 +18,13 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+btn:focus, btn:active:focus, btn-link.nav-link:focus, form-control:focus, form-check-input:focus {
+  box-shadow: var(--button-shadow);
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+body {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: minmax(0, 1fr);
 }

@@ -39,6 +39,11 @@ namespace University_Chain_Management_System.Repositories
                 .FirstOrDefaultAsync(g => g.Id == id);
         }
 
+        public async Task<IEnumerable<Grade>> GetByYear(int year)
+        {
+            return await _context.Grades.Where(g => g.IssuanceDate.Year == year).ToListAsync();
+        }
+
         public bool Save()
         {
             var save = _context.SaveChanges();

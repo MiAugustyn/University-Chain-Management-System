@@ -5,9 +5,9 @@ namespace University_Chain_Management_System.ModelsValidations
 {
     public class DateValidation : ValidationAttribute
     {
-        static int MinYear { get { return 1900; } }
+        protected static int MinYear { get { return 1900; } }
 
-        static int MaxYear { get { return DateTime.UtcNow.Year + 50; } }
+        protected static int MaxYear { get { return DateTime.UtcNow.Year + 50; } }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -30,7 +30,7 @@ namespace University_Chain_Management_System.ModelsValidations
             return ValidateParsed(parsed, name);
         }
 
-        private ValidationResult ValidateParsed(DateTime parsed, string name)
+        protected virtual ValidationResult ValidateParsed(DateTime parsed, string name)
         {
             if (parsed.Year < MinYear)
                 return new ValidationResult($"{name} year cannot be earlier than {MinYear}.");

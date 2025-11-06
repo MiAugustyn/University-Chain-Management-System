@@ -7,6 +7,8 @@ namespace University_Chain_Management_System.Repositories
     {
         Task<IEnumerable<Student>> GetAll();
         Task<Student> GetById(int id);
+        Task<IEnumerable<Student>> GetEnrolledByYear(int year);
+        Task<IEnumerable<Student>> GetGraduatedByYear(int year);
         Task<StudentViewModel> GetViewModelById(int id);
         bool Add(Student student);
         bool Update(Student student);

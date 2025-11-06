@@ -38,6 +38,22 @@ namespace University_Chain_Management_System.Repositories
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
+        public async Task<IEnumerable<Student>> GetEnrolledByYear(int year)
+        {
+            return await _context.StudentsMajors
+                .Include(sm => sm.Student)
+                .Where(sm => sm.EnrollmentDate.Year == year)
+                .Select(sm => sm.Student).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Student>> GetGraduatedByYear(int year)
+        {
+            return await _context.StudentsMajors
+                .Include(sm => sm.Student)
+                .Where(sm => sm.GraduationDate.Year == year)
+                .Select(sm => sm.Student).ToListAsync();
+        }
+
         // Gets student with all their majors, subjects linked to those majors, and grades
         public async Task<StudentViewModel> GetViewModelById(int id)
         {
