@@ -38,7 +38,14 @@ namespace University_Chain_Management_System.Data
 
         public static string GetGradeColorClass(float grade)
         {
-            return "";
+            return grade switch
+            {
+                > 4 => "bg-success",
+                > 3 => "bg-primary",
+                > 2 => "bg-warning",
+                2 => "bg-danger",
+                _ => "bg-secondary",
+            };
         }
 
         public static IHtmlContent DisplayPerformanceShift(int value1, int value2)
@@ -53,8 +60,9 @@ namespace University_Chain_Management_System.Data
             if (Math.Abs(value1 - value2) < 0.01f) { return DisplayPerformanceShift(0, true); }
 
             float valueDifference = ((value1 - value2) / value2) * 100;
+            float rounderNumber = (float)Math.Round(valueDifference, 2);
 
-            return DisplayPerformanceShift(valueDifference, true);
+            return DisplayPerformanceShift(rounderNumber, true);
         }
 
         public static IHtmlContent DisplayPerformanceShift(float valueDifference, bool inPercent=false)

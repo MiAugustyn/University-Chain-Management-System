@@ -17,6 +17,11 @@ namespace University_Chain_Management_System.Data
         {
             try
             {
+                int thisYear = DateTime.Today.Year;
+                int lastYear = thisYear - 1;
+                int graduationYearFromToday = thisYear + 3;
+                int enrollmentYearFromToday = thisYear - 3;
+
                 if (!_context.Positions.Any())
                 {
                     var positions = new List<Position>
@@ -80,6 +85,7 @@ namespace University_Chain_Management_System.Data
                             },
                             Employees = new List<Employee>
                             {
+
                                 new Employee
                                 {
                                     FirstName = "John",
@@ -87,7 +93,7 @@ namespace University_Chain_Management_System.Data
                                     Email = "john.doe@techuniversity.edu",
                                     Image =
                                         "https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                                    HireDate = new DateTime(2015, 1, 1),
+                                    HireDate = new DateTime(thisYear, 1, 1),
                                     Position = positions[1]
                                 },
                                 new Employee
@@ -154,7 +160,7 @@ namespace University_Chain_Management_System.Data
                                     Email = "bobby.middleton@techinstitute.edu",
                                     Image =
                                         "https://images.unsplash.com/photo-1601655781320-205e34c94eb1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                                    HireDate = new DateTime(2018, 3, 15),
+                                    HireDate = new DateTime(thisYear, 3, 15),
                                     Position = positions[2]
                                 },
                                 new Employee
@@ -164,7 +170,7 @@ namespace University_Chain_Management_System.Data
                                     Email = "michael.brown@techinstitute.edu",
                                     Image =
                                         "https://images.unsplash.com/photo-1700616466971-a4e05aa89e7d?q=80&w=1943&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\r\n",
-                                    HireDate = new DateTime(2022, 9, 1),
+                                    HireDate = new DateTime(lastYear, 9, 1),
                                     Position = positions[0]
                                 }
                             }
@@ -203,7 +209,7 @@ namespace University_Chain_Management_System.Data
                         },
                         new Student
                         {
-                            FirstName = "Kamiyah  ",
+                            FirstName = "Kamiyah",
                             LastName = "Bush",
                             Email = "kamiyah.bush@student.techuniversity.edu",
                             Image = "https://images.unsplash.com/photo-1509839862600-309617c3201e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -217,7 +223,7 @@ namespace University_Chain_Management_System.Data
                         },
                         new Student
                         {
-                            FirstName = "Jakari  ",
+                            FirstName = "Jakari",
                             LastName = "Lozano",
                             Email = "jakari.lozano@student.techinstitute.edu",
                             Image = "https://images.unsplash.com/photo-1604177091072-b7b677a077f6?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -231,14 +237,14 @@ namespace University_Chain_Management_System.Data
                         },
                         new Student
                         {
-                            FirstName = "Ronald  ",
+                            FirstName = "Ronald",
                             LastName = "Marks",
                             Email = "ronald.marks@student.techuniversity.edu",
                             Image = "https://images.unsplash.com/photo-1546525848-3ce03ca516f6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         },
                         new Student
                         {
-                            FirstName = "Nolan  ",
+                            FirstName = "Nolan",
                             LastName = "Lamb",
                             Email = "nolan.lamb@student.techinstitute.edu",
                             Image = "https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -252,7 +258,7 @@ namespace University_Chain_Management_System.Data
                         },
                         new Student
                         {
-                            FirstName = "Westley  ",
+                            FirstName = "Westley",
                             LastName = "Yates",
                             Email = "westley.yates@student.techuniversity.edu",
                             Image = "https://images.unsplash.com/photo-1610012524257-d8910048e208?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -287,7 +293,7 @@ namespace University_Chain_Management_System.Data
                         },
                         new Student
                         {
-                            FirstName = "Isaiah ",
+                            FirstName = "Isaiah",
                             LastName = "Tapia",
                             Email = "isaiah.tapia@student.techuniversity.edu",
                             Image = "https://images.unsplash.com/photo-1492462543947-040389c4a66c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -304,8 +310,8 @@ namespace University_Chain_Management_System.Data
                         {
                             Student = students[0],
                             Major = majors[0],
-                            EnrollmentDate = new DateTime(2022, 9, 1),
-                            GraduationDate = new DateTime(2026, 6, 1),
+                            EnrollmentDate = new DateTime(thisYear, 9, 1),
+                            GraduationDate = new DateTime(graduationYearFromToday, 6, 1),
                             StudentStatus = StudentStatus.Enrolled
                         },
                         new StudentMajor
@@ -320,16 +326,16 @@ namespace University_Chain_Management_System.Data
                         {
                             Student = students[2],
                             Major = majors[2],
-                            EnrollmentDate = new DateTime(2022, 9, 1),
-                            GraduationDate = new DateTime(2026, 6, 1),
+                            EnrollmentDate = new DateTime(thisYear, 9, 1),
+                            GraduationDate = new DateTime(graduationYearFromToday, 6, 1),
                             StudentStatus = StudentStatus.Enrolled
                         },
                         new StudentMajor
                         {
                             Student = students[3],
                             Major = majors[3],
-                            EnrollmentDate = new DateTime(2021, 9, 1),
-                            GraduationDate = new DateTime(2025, 6, 1),
+                            EnrollmentDate = new DateTime(enrollmentYearFromToday, 9, 1),
+                            GraduationDate = new DateTime(lastYear, 6, 1),
                             StudentStatus = StudentStatus.Enrolled
                         },
                         new StudentMajor
@@ -344,16 +350,16 @@ namespace University_Chain_Management_System.Data
                         {
                             Student = students[5],
                             Major = majors[1],
-                            EnrollmentDate = new DateTime(2021, 9, 1),
-                            GraduationDate = new DateTime(2025, 6, 1),
+                            EnrollmentDate = new DateTime(thisYear, 9, 1),
+                            GraduationDate = new DateTime(graduationYearFromToday, 6, 1),
                             StudentStatus = StudentStatus.Enrolled
                         },
                         new StudentMajor
                         {
                             Student = students[6],
                             Major = majors[2],
-                            EnrollmentDate = new DateTime(2022, 9, 1),
-                            GraduationDate = new DateTime(2026, 6, 1),
+                            EnrollmentDate = new DateTime(enrollmentYearFromToday, 9, 1),
+                            GraduationDate = new DateTime(thisYear, 6, 1),
                             StudentStatus = StudentStatus.Enrolled
                         },
                         new StudentMajor
@@ -368,8 +374,8 @@ namespace University_Chain_Management_System.Data
                         {
                             Student = students[8],
                             Major = majors[0],
-                            EnrollmentDate = new DateTime(2022, 9, 1),
-                            GraduationDate = new DateTime(2026, 6, 1),
+                            EnrollmentDate = new DateTime(thisYear, 9, 1),
+                            GraduationDate = new DateTime(graduationYearFromToday, 6, 1),
                             StudentStatus = StudentStatus.Enrolled
                         },
                         new StudentMajor
@@ -384,32 +390,32 @@ namespace University_Chain_Management_System.Data
                         {
                             Student = students[10],
                             Major = majors[2],
-                            EnrollmentDate = new DateTime(2022, 9, 1),
-                            GraduationDate = new DateTime(2026, 6, 1),
+                            EnrollmentDate = new DateTime(enrollmentYearFromToday - 1, 9, 1),
+                            GraduationDate = new DateTime(lastYear, 6, 1),
                             StudentStatus = StudentStatus.Enrolled
                         },
                         new StudentMajor
                         {
                             Student = students[11],
                             Major = majors[3],
-                            EnrollmentDate = new DateTime(2021, 9, 1),
-                            GraduationDate = new DateTime(2025, 6, 1),
+                            EnrollmentDate = new DateTime(lastYear, 9, 1),
+                            GraduationDate = new DateTime(graduationYearFromToday - 1, 6, 1),
                             StudentStatus = StudentStatus.Enrolled
                         },
                         new StudentMajor
                         {
                             Student = students[12],
                             Major = majors[0],
-                            EnrollmentDate = new DateTime(2022, 9, 1),
-                            GraduationDate = new DateTime(2026, 6, 1),
+                            EnrollmentDate = new DateTime(enrollmentYearFromToday - 1, 9, 1),
+                            GraduationDate = new DateTime(lastYear, 6, 1),
                             StudentStatus = StudentStatus.Enrolled
                         },
                         new StudentMajor
                         {
                             Student = students[13],
                             Major = majors[1],
-                            EnrollmentDate = new DateTime(2021, 9, 1),
-                            GraduationDate = new DateTime(2025, 6, 1),
+                            EnrollmentDate = new DateTime(thisYear, 9, 1),
+                            GraduationDate = new DateTime(graduationYearFromToday, 6, 1),
                             StudentStatus = StudentStatus.Enrolled
                         },
                     };
@@ -419,34 +425,34 @@ namespace University_Chain_Management_System.Data
                     var subjects = _context.Subjects.ToList();
                     var grades = new List<Grade>
                     {
-                        new Grade { Value = 4.5f, Student = students[0], Subject = subjects[0] },
-                        new Grade { Value = 4.5f, Student = students[1], Subject = subjects[2] },
-                        new Grade { Value = 4.5f, Student = students[2], Subject = subjects[4] },
-                        new Grade { Value = 4.5f, Student = students[3], Subject = subjects[6] },
-                        new Grade { Value = 5.0f, Student = students[4], Subject = subjects[1] },
-                        new Grade { Value = 4.5f, Student = students[5], Subject = subjects[3] },
-                        new Grade { Value = 4.5f, Student = students[6], Subject = subjects[5] },
-                        new Grade { Value = 4.5f, Student = students[7], Subject = subjects[7] },
-                        new Grade { Value = 4.5f, Student = students[8], Subject = subjects[0] },
-                        new Grade { Value = 4.5f, Student = students[9], Subject = subjects[2] },
-                        new Grade { Value = 4.5f, Student = students[10], Subject = subjects[4] },
-                        new Grade { Value = 3.5f, Student = students[11], Subject = subjects[6] },
-                        new Grade { Value = 4.5f, Student = students[12], Subject = subjects[0] },
-                        new Grade { Value = 4.5f, Student = students[13], Subject = subjects[2] },
-                        new Grade { Value = 4.5f, Student = students[0], Subject = subjects[4] },
-                        new Grade { Value = 4.0f, Student = students[1], Subject = subjects[6] },
-                        new Grade { Value = 4.5f, Student = students[2], Subject = subjects[0] },
-                        new Grade { Value = 3.0f, Student = students[3], Subject = subjects[2] },
-                        new Grade { Value = 4.5f, Student = students[4], Subject = subjects[4] },
-                        new Grade { Value = 4.5f, Student = students[5], Subject = subjects[6] },
-                        new Grade { Value = 4.5f, Student = students[6], Subject = subjects[1] },
-                        new Grade { Value = 4.0f, Student = students[7], Subject = subjects[3] },
-                        new Grade { Value = 3.5f, Student = students[8], Subject = subjects[5] },
-                        new Grade { Value = 4.5f, Student = students[9], Subject = subjects[7] },
-                        new Grade { Value = 4.5f, Student = students[10], Subject = subjects[1] },
-                        new Grade { Value = 4.5f, Student = students[11], Subject = subjects[3] },
-                        new Grade { Value = 4.5f, Student = students[12], Subject = subjects[5] },
-                        new Grade { Value = 4.5f, Student = students[13], Subject = subjects[7] }
+                        new Grade { Value = 4.5f, Student = students[0], Subject = subjects[0], IssuanceDate = new DateTime(thisYear, 1, 3) },
+                        new Grade { Value = 4.5f, Student = students[1], Subject = subjects[2], IssuanceDate = new DateTime(lastYear, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[2], Subject = subjects[4], IssuanceDate = new DateTime(thisYear, 1, 12) },
+                        new Grade { Value = 4.5f, Student = students[3], Subject = subjects[6], IssuanceDate = new DateTime(thisYear, 2, 1) },
+                        new Grade { Value = 5.0f, Student = students[4], Subject = subjects[1], IssuanceDate = new DateTime(lastYear, 7, 2) },
+                        new Grade { Value = 4.5f, Student = students[5], Subject = subjects[3], IssuanceDate = new DateTime(thisYear, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[6], Subject = subjects[5], IssuanceDate = new DateTime(2023, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[7], Subject = subjects[7], IssuanceDate = new DateTime(thisYear, 1, 7) },
+                        new Grade { Value = 4.5f, Student = students[8], Subject = subjects[0], IssuanceDate = new DateTime(lastYear, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[9], Subject = subjects[2], IssuanceDate = new DateTime(thisYear, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[10], Subject = subjects[4], IssuanceDate = new DateTime(thisYear, 11, 21) },
+                        new Grade { Value = 3.5f, Student = students[11], Subject = subjects[6], IssuanceDate = new DateTime(2022, 8, 1) },
+                        new Grade { Value = 4.5f, Student = students[12], Subject = subjects[0], IssuanceDate = new DateTime(thisYear, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[13], Subject = subjects[2], IssuanceDate = new DateTime(thisYear, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[0], Subject = subjects[4], IssuanceDate = new DateTime(thisYear, 1, 1) },
+                        new Grade { Value = 4.0f, Student = students[1], Subject = subjects[6], IssuanceDate = new DateTime(2021, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[2], Subject = subjects[0], IssuanceDate = new DateTime(thisYear, 1, 1) },
+                        new Grade { Value = 3.0f, Student = students[3], Subject = subjects[2], IssuanceDate = new DateTime(thisYear, 5, 1) },
+                        new Grade { Value = 4.5f, Student = students[4], Subject = subjects[4], IssuanceDate = new DateTime(lastYear, 1, 9) },
+                        new Grade { Value = 4.5f, Student = students[5], Subject = subjects[6], IssuanceDate = new DateTime(thisYear, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[6], Subject = subjects[1], IssuanceDate = new DateTime(thisYear, 11, 1) },
+                        new Grade { Value = 4.0f, Student = students[7], Subject = subjects[3], IssuanceDate = new DateTime(thisYear, 1, 1) },
+                        new Grade { Value = 3.5f, Student = students[8], Subject = subjects[5], IssuanceDate = new DateTime(thisYear, 1, 8) },
+                        new Grade { Value = 4.5f, Student = students[9], Subject = subjects[7], IssuanceDate = new DateTime(thisYear, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[10], Subject = subjects[1], IssuanceDate = new DateTime(thisYear, 1, 21) },
+                        new Grade { Value = 4.5f, Student = students[11], Subject = subjects[3], IssuanceDate = new DateTime(lastYear, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[12], Subject = subjects[5], IssuanceDate = new DateTime(2020, 1, 1) },
+                        new Grade { Value = 4.5f, Student = students[13], Subject = subjects[7], IssuanceDate = new DateTime(thisYear, 12, 6) }
                     };
 
                     _context.Grades.AddRange(grades);
@@ -457,21 +463,21 @@ namespace University_Chain_Management_System.Data
                 {
                     var notifications = new List<Notification>
                     {
-                        new Notification { NotificationType = NotificationType.Error, Title = "Payroll Processing Failure", Description = "Payroll run on October 10, 2025 failed due to data validation error. HR and IT teams: review timesheet imports and rerun batch.", PublishDate = new DateTime(2025, 10, 10) },
-                        new Notification { NotificationType = NotificationType.Warning, Title = "HVAC Fluctuations Reported", Description = "Temperature control issues on 5th floor, room 502 reported on October 8, 2025. HVAC technicians: investigate and restore stable climate by October 12, 2025.", PublishDate = new DateTime(2025, 10, 8) },
-                        new Notification { NotificationType = NotificationType.Information, Title = "Student Organization Fair", Description = "Student Org Fair held on September 20, 2025. Events team: confirm room setup, security, and AV support were completed.", PublishDate = new DateTime(2025, 9, 20) },
-                        new Notification { NotificationType = NotificationType.Information, Title = "Research Grant Opportunities", Description = "New research grant applications opened September 15, 2025. Department admins: circulate application process and deadlines.", PublishDate = new DateTime(2025, 9, 15) },
-                        new Notification { NotificationType = NotificationType.Information, Title = "Holiday Break Schedule", Description = "Offices will be closed from December 23, 2024 to January 2, 2025. Department managers: finalize on-call rosters and emergency contacts.", PublishDate = new DateTime(2025, 9, 1) },
-                        new Notification { NotificationType = NotificationType.Information, Title = "Career Fair 2026", Description = "Career Fair scheduled for February 20–21, 2026. Career services staff: begin coordinating company logistics and booth assignments.", PublishDate = new DateTime(2025, 8, 25) },
-                        new Notification { NotificationType = NotificationType.Information, Title = "Guest Lecture Series", Description = "Guest lectures planned for March 2026. Faculty liaisons: confirm room bookings and AV requirements.", PublishDate = new DateTime(2025, 8, 10) },
-                        new Notification { NotificationType = NotificationType.Warning, Title = "Campus Wi-Fi Maintenance", Description = "Network maintenance scheduled for February 25, 2026 from 22:00 to 06:00. Critical services may be affected; IT staff should plan monitoring.", PublishDate = new DateTime(2025, 7, 30) },
-                        new Notification { NotificationType = NotificationType.Information, Title = "Midterm Exam Schedule Released", Description = "Midterm schedules published for February 2026. Administrative staff: verify room allocations and proctoring assignments.", PublishDate = new DateTime(2025, 6, 18) },
-                        new Notification { NotificationType = NotificationType.Error, Title = "Automated Backup System Error", Description = "Database backups for AllcampusDB failed on June 5, 2025. IT disaster recovery team: diagnose storage issues and restart backup jobs.", PublishDate = new DateTime(2025, 6, 5) },
-                        new Notification { NotificationType = NotificationType.Information, Title = "Annual Science Fair 2026", Description = "Science Fair scheduled for March 15, 2026. Staff coordinators: confirm volunteer assignments and logistics.", PublishDate = new DateTime(2025, 5, 12) },
-                        new Notification { NotificationType = NotificationType.Warning, Title = "Elevator Maintenance in Admin Building", Description = "Elevators 2 and 3 were out of service on May 2, 2025 from 08:00 to 18:00. Maintenance crew: coordinate with reception for freight deliveries.", PublishDate = new DateTime(2025, 5, 1) },
-                        new Notification { NotificationType = NotificationType.Warning, Title = "Parking Garage C Closure", Description = "Parking Garage C closed due to structural inspection on April 20–21, 2025. Facilities team: arrange alternative parking and update signage.", PublishDate = new DateTime(2025, 4, 18) },
-                        new Notification { NotificationType = NotificationType.Information, Title = "Library Hours Update", Description = "Library extended hours during finals week in January 2025. Staff schedules updated; check the staff roster.", PublishDate = new DateTime(2025, 3, 12) },
-                        new Notification { NotificationType = NotificationType.Information, Title = "New Semester Registration Open", Description = "Registration for Spring 2025 opened January 5, 2025. Staff: review departmental enrollments via the staff portal.", PublishDate = new DateTime(2025, 1, 5) },
+                        new Notification { NotificationType = NotificationType.Error, Title = "Payroll Processing Failure", Description = $"Payroll run on October 10, {thisYear} failed due to data validation error. HR and IT teams: review timesheet imports and rerun batch.", PublishDate = new DateTime(thisYear, 10, 10) },
+                        new Notification { NotificationType = NotificationType.Warning, Title = "HVAC Fluctuations Reported", Description = $"Temperature control issues on 5th floor, room 502 reported on October 8, {thisYear}. HVAC technicians: investigate and restore stable climate by October 12, {thisYear}.", PublishDate = new DateTime(thisYear, 10, 8) },
+                        new Notification { NotificationType = NotificationType.Information, Title = "Student Organization Fair", Description = $"Student Org Fair held on September 20, {thisYear}. Events team: confirm room setup, security, and AV support were completed.", PublishDate = new DateTime(thisYear, 9, 20) },
+                        new Notification { NotificationType = NotificationType.Information, Title = "Research Grant Opportunities", Description = $"New research grant applications opened September 15, {thisYear}. Department admins: circulate application process and deadlines.", PublishDate = new DateTime(thisYear, 9, 15) },
+                        new Notification { NotificationType = NotificationType.Information, Title = "Holiday Break Schedule", Description = $"Offices will be closed from December 23, 2024 to January 2, {thisYear}. Department managers: finalize on-call rosters and emergency contacts.", PublishDate = new DateTime(thisYear, 9, 1) },
+                        new Notification { NotificationType = NotificationType.Information, Title = $"Career Fair {thisYear + 1}", Description = $"Career Fair scheduled for February 20–21, {thisYear + 1}. Career services staff: begin coordinating company logistics and booth assignments.", PublishDate = new DateTime(thisYear, 8, 25) },
+                        new Notification { NotificationType = NotificationType.Information, Title = "Guest Lecture Series", Description = $"Guest lectures planned for March {thisYear + 1}. Faculty liaisons: confirm room bookings and AV requirements.", PublishDate = new DateTime(thisYear, 8, 10) },
+                        new Notification { NotificationType = NotificationType.Warning, Title = "Campus Wi-Fi Maintenance", Description = "Network maintenance scheduled for February 25, {thisYear + 1} from 22:00 to 06:00. Critical services may be affected; IT staff should plan monitoring.", PublishDate = new DateTime(thisYear, 7, 30) },
+                        new Notification { NotificationType = NotificationType.Information, Title = "Midterm Exam Schedule Released", Description = $"Midterm schedules published for February {thisYear + 1}. Administrative staff: verify room allocations and proctoring assignments.", PublishDate = new DateTime(thisYear, 6, 18) },
+                        new Notification { NotificationType = NotificationType.Error, Title = "Automated Backup System Error", Description = $"Database backups for AllcampusDB failed on June 5, {thisYear}. IT disaster recovery team: diagnose storage issues and restart backup jobs.", PublishDate = new DateTime(thisYear, 6, 5) },
+                        new Notification { NotificationType = NotificationType.Information, Title = $"Annual Science Fair {thisYear + 1}", Description = $"Science Fair scheduled for March 15, {thisYear + 1}. Staff coordinators: confirm volunteer assignments and logistics.", PublishDate = new DateTime(thisYear, 5, 12) },
+                        new Notification { NotificationType = NotificationType.Warning, Title = "Elevator Maintenance in Admin Building", Description = $"Elevators 2 and 3 were out of service on May 2, {thisYear} from 08:00 to 18:00. Maintenance crew: coordinate with reception for freight deliveries.", PublishDate = new DateTime(thisYear, 5, 1) },
+                        new Notification { NotificationType = NotificationType.Warning, Title = "Parking Garage C Closure", Description = $"Parking Garage C closed due to structural inspection on April 20–21, {thisYear}. Facilities team: arrange alternative parking and update signage.", PublishDate = new DateTime(thisYear, 4, 18) },
+                        new Notification { NotificationType = NotificationType.Information, Title = "Library Hours Update", Description = $"Library extended hours during finals week in January {thisYear}. Staff schedules updated; check the staff roster.", PublishDate = new DateTime(thisYear, 3, 12) },
+                        new Notification { NotificationType = NotificationType.Information, Title = "New Semester Registration Open", Description = $"Registration for Spring {thisYear} opened January 5, {thisYear}. Staff: review departmental enrollments via the staff portal.", PublishDate = new DateTime(thisYear, 1, 5) },
 
                     };
 
