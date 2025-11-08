@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Grade>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Grades";
+}
+
+<a asp-controller="Grade"
+        asp-action="Create"
+        class="btn btn-outline-primary btn-lg w-100"
+        type="button">
+    Create new Grade
+</a>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+
+        <div class="row">
+            @foreach (Grade grade in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <span class="badge rounded px-2 @(Constants.GetGradeColorClass(grade.Value))">@grade.Value</span>
+                            </p>
+                            <p class="card-text">@grade.Student?.FullName</p>
+                            <p class="card-text">@grade.Subject?.Name</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a asp-controller="Grade" asp-action="Details" asp-route-id="@grade.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                    <a asp-controller="Grade" asp-action="Edit" asp-route-id="@grade.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a asp-controller="Grade" asp-action="Delete" asp-route-id="@grade.Id" type="button" class="btn btn-sm btn-outline-secondary">Delete</a>
+                                </div>
+                                <small class="text-muted">@grade.Id</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>

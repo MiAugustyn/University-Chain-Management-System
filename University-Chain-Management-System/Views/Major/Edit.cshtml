@@ -1,0 +1,36 @@
+﻿@model MajorViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Edit Major";
+}
+
+<form method="post" asp-action="Edit">
+
+    <input type="hidden" asp-for="Major.Id" />
+
+    <div class="form-group">
+        <label asp-for="Major.Name"></label>
+        <input asp-for="Major.Name" class="form-control" placeholder="Name">
+        <span asp-validation-for="Major.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Major.Description"></label>
+        <input asp-for="Major.Description" class="form-control" placeholder="Description">
+        <span asp-validation-for="Major.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Major.UniversityId">University</label>
+        <select asp-for="Major.UniversityId"
+                asp-items="@(new SelectList(Model.Universities, "Id", "Name"))"
+                class="form-control">
+        </select>
+        <span asp-validation-for="Major.UniversityId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</form>

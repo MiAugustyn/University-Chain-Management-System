@@ -1,0 +1,126 @@
+﻿@model StudentMajorViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Edit Student's Major";
+}
+
+<form method="post" asp-action="Edit">
+    <input type="hidden" asp-for="StudentMajor.Id" />
+
+    <div class="form-group">
+        <label asp-for="StudentMajor.MajorId"></label>
+        <select asp-for="StudentMajor.MajorId" id="majorDropdown" class="form-control" placeholder="Major"
+                asp-items="@(new SelectList(Model.Majors, "Id", "Name"))">
+            <option value="">Select Major</option>
+        </select>
+        <span asp-validation-for="StudentMajor.MajorId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group" id="studentGroup" style="display: none;">
+        <label asp-for="StudentMajor.StudentId"></label>
+        <select asp-for="StudentMajor.StudentId" id="studentDropdown" class="form-control" placeholder="Student">
+            <option value="">Select Student</option>
+        </select>
+        <span asp-validation-for="StudentMajor.StudentId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StudentMajor.EnrollmentDate"></label>
+        <input asp-for="StudentMajor.EnrollmentDate" id="enrollmentdatepicker" class="form-control" type="text" placeholder="Enrollment Date">
+        <span asp-validation-for="StudentMajor.EnrollmentDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="StudentMajor.GraduationDate"></label>
+        <input asp-for="StudentMajor.GraduationDate" id="graduationdatepicker" class="form-control" type="text" placeholder="Graduation Date">
+        <span asp-validation-for="StudentMajor.GraduationDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="StudentMajor.StudentStatus"></label>
+        <select asp-for="StudentMajor.StudentStatus"
+                asp-items="Html.GetEnumSelectList<StudentStatus>()"
+                class="form-control">
+        </select>
+        <span asp-validation-for="StudentMajor.StudentStatus" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</form>
+
+@section Scripts
+{
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            $("#enrollmentdatepicker, #graduationdatepicker").datepicker({
+                dateFormat: "dd/mm/yy"
+            });
+
+            $('#majorDropdown').change(function () {
+                loadStudentsForMajor(true);
+            });
+
+            loadStudentsForMajor(false);
+        });
+
+        function loadStudentsForMajor(majorChanged = false) {
+            var selectedMajorId = $('#majorDropdown').val();
+            var studentGroup = $('#studentGroup');
+            var studentDropdown = $('#studentDropdown');
+
+            var currentStudentId = null;
+            if (!majorChanged) {
+                currentStudentId = '@Model.StudentMajor.StudentId';
+            }
+
+            if (selectedMajorId === '' || selectedMajorId === null) {
+                studentGroup.hide();
+                studentDropdown.empty().append('<option value="">Select Student</option>');
+                return;
+            } else {
+                studentGroup.show();
+                studentDropdown.empty().append('<option value="">Loading...</option>');
+            }
+
+            $.ajax({
+                url: '@Url.Action("GetAvailableStudents", "StudentMajor")',
+                type: 'GET',
+                data: {
+                    majorId: selectedMajorId,
+                    currentStudentId: currentStudentId !== '0' && currentStudentId !== '' ? currentStudentId : null
+                },
+                success: function (students) {
+                    studentDropdown.empty();
+
+                    var filledStudent = null;
+                    if (currentStudentId && currentStudentId !== '0' && currentStudentId !== '') {
+                        filledStudent = students.find(s => s.id == currentStudentId);
+                    }
+
+                    if (filledStudent != null) {
+                        studentDropdown.append('<option value="' + filledStudent.id + '" selected>' + filledStudent.fullName + '</option>');
+
+                        var studentIndex = students.findIndex(s => s.id == currentStudentId);
+                        students.splice(studentIndex, 1);
+                    } else {
+                        studentDropdown.append('<option value="">Select Student</option>');
+                    }
+
+                    $.each(students, function (index, student) {
+                        studentDropdown.append('<option value="' + student.id + '">' + student.fullName + '</option>');
+                    });
+                },
+                error: function () {
+                    studentDropdown.empty().append('<option value="">Error Loading Students</option>');
+                    alert('Error loading available students. Please try again.');
+                }
+            });
+        }
+    </script>
+
+}

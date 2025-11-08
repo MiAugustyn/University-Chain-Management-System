@@ -1,0 +1,126 @@
+﻿.site-footer {
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #0b2948 0%, #0d3b6b 100%);
+    color: lightblue;
+    border-top: 100px;
+    overflow: hidden;
+    margin-top: 5rem;
+}
+
+.ucms-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, white 0%, rgba(255,255,255,0.85) 100%);
+    box-shadow: var(--button-shadow);
+    color: #0b2948;
+}
+
+.footer-button-pushable {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.footer-button-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(2px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.footer-button-edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient( to left, #03131c 0%, #0d3b6b 8%, #0d3b6b 92%, #03131c 100% );
+}
+
+.footer-button-front {
+    display: block;
+    padding: 12px 27px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: white;
+    background: #0d6efd;
+    will-change: transform;
+    transform: translateY(-4px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+    text-decoration: none;
+}
+
+a.footer-button-front {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer-button-pushable:hover {
+    filter: brightness(110%);
+    -webkit-filter: brightness(110%);
+}
+
+    .footer-button-pushable:hover .footer-button-front {
+        transform: translateY(-6px);
+        transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+    }
+
+.footer-button-pushable:active .footer-button-front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+.footer-button-pushable:hover .footer-button-shadow {
+    transform: translateY(4px);
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.footer-button-pushable:active .footer-button-shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+}
+
+.footer-button-pushable:focus:not(:focus-visible) {
+    outline: none;
+}
+                
+
+.social-btn {
+    width: 44px;
+    height: 44px;
+    color: lightblue;
+    display: inline-grid;
+    place-items: center;
+    text-decoration: none;
+}
+
+.linkedin-colors:hover,
+.linkedin-colors:focus {
+    color: #0A66C2;
+    background: white;
+    transform: translateY(-4px);
+    outline: none;
+}
+
+.github-colors:hover,
+.github-colors:focus {
+    color: white;
+    background: black;
+    transform: translateY(-4px);
+    outline: none;
+}

@@ -1,0 +1,72 @@
+﻿@model Grade
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Grade's Details";
+}
+
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body d-flex justify-content-between align-items-start">
+                    <div>
+                        <h4 class="mb-1">Grade <span class="badge @(Constants.GetGradeColorClass(Model.Value))">@Model.Value</span></h4>
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <strong>Student</strong>
+                                <div class="ms-2">
+                                    @if (string.IsNullOrWhiteSpace(Model?.Student?.FullName))
+                                    {
+                                        <span class="text-muted">Not Provided</span>
+                                    }
+                                    else
+                                    {
+                                        @Model.Student.FullName
+                                    }
+                                </div>
+                            </li>
+
+                            <li class="mt-2">
+                                <strong>Subject</strong>
+                                <div class="ms-2">
+                                    @if (string.IsNullOrWhiteSpace(Model?.Subject?.Name))
+                                    {
+                                        <span class="text-muted">Not Provided</span>
+                                    }
+                                    else
+                                    {
+                                        @Model.Subject.Name
+                                    }
+                                </div>
+                            </li>
+                            <li>
+                                <strong>Issuance Date</strong>
+                                <div class="ms-2">
+                                    @Model.IssuanceDate
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Quick Info</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2"><strong>Grade ID</strong> <span class="badge bg-secondary ms-2">@(Model?.Id ?? 0)</span></p>
+                    <p class="mb-2"><strong>Student ID</strong> <span class="badge bg-secondary ms-2">@(Model?.Student?.Id ?? 0)</span></p>
+                    <p class="mb-2"><strong>Subject ID</strong> <span class="badge bg-secondary ms-2">@(Model?.Subject?.Id ?? 0)</span></p>
+                </div>
+                <div class="card-footer text-end">
+                    <a asp-action="Index" class="btn btn-sm btn-secondary">Back to list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

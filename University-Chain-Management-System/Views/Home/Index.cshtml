@@ -1,0 +1,207 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles   
+{
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" / >
+}
+
+<div class="dashboard-header">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-8">
+                <h1 class="mb-2">
+                    <i class="bi bi-mortarboard me-3"></i>
+                    University Chain Management System
+                </h1>
+                <p class="mb-0 opacity-90">Welcome back! Here's what's happening across your institutions today.</p>
+            </div>
+
+            <div class="col-md-4 text-md-end pe-md-4">
+                <div class="d-inline-flex align-items-center">
+                    <i class="bi bi-calendar3 me-2"></i>
+                    <span>@DateTime.Now.ToString("dd, MMMM, yyyy")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="welcome-section">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h3 class="text-primary mb-2">Good @(DateTime.Now.Hour < 12 ? "Morning" : DateTime.Now.Hour < 18 ? "Afternoon" : "Evening")!</h3>
+                <p class="text-muted mb-0">Manage your university network efficiently with real-time insights and comprehensive tools.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <button class="btn btn-primary btn-lg w-100">
+                    <i class="bi bi-person-fill-lock"></i>
+                    Login
+                </button>
+                <small class="d-block text-muted mt-1" style="font-size:0.65rem;">To be added</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row mb-4">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card stat-card h-100">
+                        <div class="stat-card-header">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="stat-icon students">
+                                    <i class="bi bi-people-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-card-body">
+                            <div class="stat-label one-line-text-shrink">Students</div>
+                            <div class="stat-description">New students enrolled.</div>
+                            @if (Model.EnrolledStudentsShift != null) { @Constants.DisplayPerformanceShift((int)Model.EnrolledStudentsShift) }
+                            else { @Constants.PerformanceShiftNullValue(); }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card stat-card h-100">
+                        <div class="stat-card-header">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="stat-icon active">
+                                    <i class="bi bi-person-vcard"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-card-body">
+                            <div class="stat-label one-line-text-shrink">Employees</div>
+                            <div class="stat-description">New employees hired.</div>
+                            @if (Model.EmployeesShift != null) { @Constants.DisplayPerformanceShift((int)Model.EmployeesShift) }
+                            else { @Constants.PerformanceShiftNullValue(); }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card stat-card h-100">
+                        <div class="stat-card-header">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="stat-icon graduates">
+                                    <i class="bi bi-mortarboard-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-card-body">
+                            <div class="stat-label one-line-text-shrink">Graduates</div>
+                            <div class="stat-description">New students graduated.</div>
+                            @if (Model.GradesAverageThisYear != null && Model.GraduatedStudentsShift != null) {@Constants.DisplayPerformanceShift((int)Model.GraduatedStudentsShift); }
+                            else { @Constants.PerformanceShiftNullValue(); }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card stat-card h-100">
+                        <div class="stat-card-header">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="stat-icon faculty">
+                                    <i class="bi bi-person-workspace"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-card-body">
+                            <div class="stat-label">Grades</div>
+                            <div class="stat-description">Grades average this year.</div>
+                            @if (Model.GradesAverageThisYear != null && Model.GradesAverageLastYear != null) { @Constants.DisplayPerformanceShiftPercent((float)Model.GradesAverageThisYear, (float)Model.GradesAverageLastYear); }
+                            else { @Constants.PerformanceShiftNullValue(); }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h5 class="mb-3">
+                    <i class="bi bi-lightning-fill text-primary me-2"></i>
+                    Quick Actions
+                </h5>
+                <div class="row justify-content-evenly align-items-center">
+                    <div class="col-6 col-md-3 mb-3">
+                        <a class="action-btn text-decoration-none" asp-controller="Student" asp-action="Create">
+                            <i class="bi bi-person-plus fs-4 mb-2"></i>
+                            <small class="one-line-text-shrink">Add new student.</small>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 mb-3">
+                        <a class="action-btn text-decoration-none" asp-controller="StudentMajor" asp-action="Create">
+                            <i class="bi bi-person-gear fs-4 mb-2"></i>
+                            <small class="one-line-text-shrink">Assign student to major.</small>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 mb-3">
+                        <a class="action-btn text-decoration-none" asp-controller="Grade" asp-action="Create">
+                            <i class="bi bi-clipboard2-plus fs-4 mb-2"></i>
+                            <small class="one-line-text-shrink">Add new grade.</small>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 mb-3">
+                        <a class="action-btn text-decoration-none" asp-controller="Notification" asp-action="Create">
+                            <i class="bi bi-phone-vibrate fs-4 mb-2"></i>
+                            <small class="one-line-text-shrink">Create new notification.</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="notification-panel">
+                <div class="notification-header">
+                    <h5 class="mb-0 d-flex align-items-center">
+                        <i class="bi bi-bell-fill text-primary me-2"></i>
+                        System Notifications
+                    </h5>
+                </div>
+                    
+                @if(Model.Notifications.Any())
+                {
+                    @foreach (Notification notification in Model.Notifications)
+                    {
+                        <a class="notification-item d-flex align-items-start" asp-controller="Notification" asp-route-id="@notification.Id" asp-action="Details">
+                            <div class="@Constants.GetNotificationContainerClass(notification.NotificationType)">
+                                <i class="@Constants.GetNotificationIconClass(notification.NotificationType)"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold mb-1">@notification.Title</div>
+                                <div class="text-muted small">@notification.Description</div>
+                                <div class="text-muted small mt-1">Published @Constants.GetTimeFromCreation(notification.PublishDate).</div>
+                            </div>
+                        </a>
+                    }
+                }
+                else
+                {
+                    <div class="notification-item d-flex align-items-start">
+                        <div class="notification-icon">
+                            <i class="bi bi-bell"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="fw-semibold mb-1">No new notifications!</div>
+                            <div class="text-muted small">Everything is up to date.</div>
+                        </div>
+                    </div>
+                }
+
+                <div class="p-3 border-top">
+                    <a class="btn btn-outline-primary btn-sm w-100" asp-controller="Notification" asp-action="Index">
+                        <i class="bi bi-arrow-right me-1"></i>
+                        View All Notifications
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using University_Chain_Management_System.Data.Enums;
+using University_Chain_Management_System.ModelsValidations;
+
+namespace University_Chain_Management_System.Models.JoinTables
+{
+    public class StudentMajor
+    {
+        [Key]
+        public int Id { get; set; }
+        [ForeignKey("Student")]
+        public int StudentId { get; set; }
+        public Student? Student { get; set; }
+        [ForeignKey("Major")]
+        public int MajorId { get; set; }
+        public Major? Major { get; set; }
+        [DataType(DataType.Date)]
+        [DateValidation]
+        public DateTime EnrollmentDate { get; set; }
+        [DataType(DataType.Date)]
+        [DateValidation]
+        public DateTime GraduationDate { get; set; }
+        public StudentStatus StudentStatus { get; set; }
+    }
+}

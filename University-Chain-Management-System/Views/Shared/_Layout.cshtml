@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UCMS </title> 
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/University_Chain_Management_System.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm mb-3">
+            <div class="container-fluid">
+                <a class="fw-bold text-primary" asp-area="" asp-controller="Home" asp-action="Index">UCMS</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".main-navbar-collapse"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse main-navbar-collapse">
+                    <ul class="navbar-nav w-100 justify-content-evenly">
+                        <li class="nav-item">
+                            <a class="nav-link nav-custom" asp-controller="Employee" asp-action="Index">Employees</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-custom" asp-controller="Grade" asp-action="Index">Grades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-custom" asp-controller="Major" asp-action="Index">Majors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-custom" asp-controller="Position" asp-action="Index">Positions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-custom" asp-controller="Student" asp-action="Index">Students</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-custom" asp-controller="StudentMajor" asp-action="Index">Students' Majors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-custom" asp-controller="Subject" asp-action="Index">Subjects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-custom" asp-controller="University" asp-action="Index">Universities</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="site-footer py-5" role="contentinfo">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <div class="ucms-icon d-inline-flex align-items-center justify-content-center p-2 bg-secondary rounded me-3 text-blue" aria-hidden="true">
+                        <i class="bi bi-mortarboard fs-4"></i>
+                    </div>
+                    <div>
+                        <div class="h6 mb-0 text-white fw-bold">UCMS</div>
+                        <small class="text-white-50 text-break">University Chain Management System</small>
+                    </div>
+                </div>
+
+                <nav class="d-flex align-items-center gap-3" aria-label="Footer navigation">
+                    <a class="footer-button-pushable text-decoration-none" role="button" onclick="scrollToTop()" asp-controller="Home" asp-action="Index" aria-label="Back to home page">
+                        <span class="footer-button-shadow"> </span>
+                        <span class="footer-button-edge"> </span>
+                        <span class="footer-button-front">
+                            <i class="bi bi-house-door"></i>
+                            Home
+                    </a>
+
+                    <button class="footer-button-pushable" role="button" onclick="scrollToTop()" aria-label="Back to top">
+                        <span class="footer-button-shadow"> </span>
+                        <span class="footer-button-edge"> </span>
+                        <span class="footer-button-front text">
+                            <i class="bi bi-arrow-up"></i>
+                            Top
+                        </span>
+                    </button>
+                </nav>
+
+                <div class="social d-flex gap-3">
+                    <a class="social-btn github-colors" target="_blank" rel="noopener noreferrer" href="https://github.com/MiAugustyn" aria-label="Visit GitHub">
+                        <i class="bi bi-github"></i>
+                    </a>
+                    <a class="social-btn linkedin-colors" target="_blank" rel="noopener noreferrer" href="https://linkedin.com/in/miaugustyn" aria-label="Visit LinkedIn">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+
+            <hr class="footer-divider my-4" />
+
+            <div class="text-white d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <div class="small text-center">
+                    <span>Built with <span aria-hidden="true">❤</span> and <span class="fw-bold">ASP.NET Core</span></span>
+                </div>
+
+                <div class="text-muted small text-md-end">
+                    Created by <span class="fw-semibold text-white">Michał Augustyn</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/layout.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
