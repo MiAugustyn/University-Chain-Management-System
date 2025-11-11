@@ -7,7 +7,7 @@ Author: Michał Augustyn
 - .NET 8 SDK or later
 - SQL Server (2016+)
 
-### Technologdy Stack
+### Technolody Stack
 
 - **Framework:** ASP.NET Core MVC
 - **ORM:** Entity Framework Core
@@ -24,7 +24,7 @@ It provides integrated student enrollment, employee management, academic program
 ### Domain Models
 
 UCMS defines nine interconnected entities: **Employee**, **Grade**, **Notification**, **Major**, **Position**, **Student**, **Subject** and the **University**. 
-Application configures one-to-many and many-to-many relationships through the **StudentMajor** join table to maintain referential integrity and prevent data redundancy.
+The application configures one-to-many and many-to-many relationships through the **StudentMajor** join table to maintain referential integrity and prevent data redundancy.
 
 <sub>UCMS navbar providing quick access to each model’s Index page (excluding notifications tied directly to the homepage):</sub> \
 <img width="1657" height="31" alt="Image" src="https://github.com/user-attachments/assets/9c5ae02c-0e57-4a89-94da-8dddb1024b79" />
@@ -36,8 +36,8 @@ Each repository encapsulates CRUD operations and occasionally more complex query
 
 ### Controllers & Views
 
-Each model has dedicated controller with complete CRUD actions (Index, Details, Create, Edit, Delete). 
-Project contains comprehensive Razor views featuring form-based interfaces that enable users to interact with all CRUD operations through an intuitive user interface.
+Each model has a dedicated controller with complete CRUD actions (Index, Details, Create, Edit, Delete). 
+Project contains comprehensive Razor Views featuring form-based interfaces that enable users to interact with all CRUD operations through an intuitive user interface.
 
 <sub>Grades *Index* page with *Create* action at the top and *View*, *Edit* and *Delete* actions separately under each grade:</sub> \
 <img width="1302" height="447" alt="image" src="https://github.com/user-attachments/assets/e72bcb8c-9dde-4584-9724-087684cc7f93" />
@@ -52,12 +52,12 @@ Integrated multi-layer validation across all models utilizing ValidationAttribut
 
 ### Dynamic User Interactions
 
-jQuery-powered enhancements like custom date pickers and dynamic form interactions got implemented for improved user experience. 
+jQuery-powered enhancements like custom date pickers and dynamic form interactions were implemented for improved user experience. 
 Controllers expose endpoints that enable real-time data filtering - for example, dynamically loading students not yet enrolled in a selected major during StudentMajor assignment.
 
 ### User Interface & Responsive Design
 
-Designed responsive pages including a professional Homepage, Navigation Bar, and Footer with custom CSS and Bootstrap styling. 
+Designed responsive pages, including a professional Homepage, Navigation Bar, and Footer with custom CSS and Bootstrap styling. 
 The homepage aggregates key metrics featuring a latest-notifications panel, year-over-year performance statistics, and quick-action shortcuts.
 
 <sub>UCMS homepage view scaled to a different resolution:</sub> \
@@ -75,12 +75,12 @@ This promotes code maintainability, reduces duplication, and enables consistent 
 - Specify the database connection string in the *appsettings.json* file under the **ConnectionStrings** section by setting the **DefaultConnection** key. 
 Refer to the sample connection string, provided as an example structure for local development.
 
-<sub>*appsettings.json* file with DefaultConection key underlined:</sub> \
+<sub>*appsettings.json* file with DefaultConnection key underlined:</sub> \
 <img width="1646" height="227" alt="Image" src="https://github.com/user-attachments/assets/0b1218f6-dfd3-48a4-badd-fc6d675790d7" />
 
 #### Deployment
 
-- In terminal or command prompt navigate to project root folder
+- In the terminal or command prompt, navigate to project root folder
 - Confirm *appsettings.json* contains correct connection string
 - Run database migrations: `dotnet ef database update`
 
